@@ -1,0 +1,74 @@
+<!-- <h2>Login</h2>
+<form>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input [(ngModel)]="userName"  type="text" name="username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input [(ngModel)]="password" type="password" name="password" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" (click)="login()">
+            Login
+        </button>
+        <a routerLink="/register" class="btn btn-link">Register</a>
+    </div>
+</form> -->
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+<section class="ftco-section">
+    <div class="container">
+      
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="wrap">
+                    <div class="img" style="background-image: url('https://images.pexels.com/photos/7289746/pexels-photo-7289746.jpeg');"></div>
+                    <div class="login-wrap p-4 p-md-5">
+                  <div class="d-flex">
+                      <div class="w-100">
+                          <h3 class="mb-4">Ingresar</h3>
+                      </div>
+                      <div class="w-100">
+                        <p class="social-media d-flex justify-content-end">
+                            <a href="javascript: void(0);" class="btn btn-success rounded submit px-3" (click)="selectLanguage('ES')" class="social-icon d-flex align-items-center justify-content-center">ES</a>
+                            <a  href="javascript: void(0);"  (click)="selectLanguage('EN')" class="social-icon d-flex align-items-center justify-content-center">EN</a>
+                        </p>
+                    </div>
+                           
+                  </div>
+                        <form action="#" class="signin-form">
+                      <div class="form-group mt-3">
+                          <input [(ngModel)]="userName" type="text" name="username" class="form-control" required>
+                          <label class="form-control-placeholder" for="username">{{loginViewLabels.userName}}</label>
+                      </div>
+                <div class="form-group">
+                  <input id="password-field" [(ngModel)]="password" type="password" name="password" class="form-control" required>
+                  <label class="form-control-placeholder" for="password">{{loginViewLabels.password}}</label>
+                  <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+                <div class="form-group">
+                    <!-- <button class="btn btn-primary"></button> -->
+                    <button  (click)="login()" style="width: 100%;background-color: #007bff;color: white;" class="btn btn-success rounded submit px-3">{{loginViewLabels.loginButton}}</button>
+                </div>
+                <div class="form-group d-md-flex">
+                    <!-- <div class="w-50 text-left">
+                        <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+                                  <input type="checkbox" checked>
+                                  <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="w-50 text-md-right">
+                                    <a href="#">Forgot Password</a>
+                                </div> -->
+                </div>
+              </form>
+              <p class="text-center">{{loginViewLabels.hasAccount}} <a data-toggle="tab" href="#signup">{{loginViewLabels.register}}</a></p>
+            </div>
+          </div>
+            </div>
+        </div>
+    </div>
+</section>
