@@ -1,0 +1,79 @@
+<section class="ftco-section">
+    <div class="container">
+      
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="wrap">
+                    <div class="img" style="background-image: url('https://images.pexels.com/photos/7289746/pexels-photo-7289746.jpeg');"></div>
+                    <div class="login-wrap p-4 p-md-5">
+                  <div class="d-flex">
+                      <div class="w-100">
+                          <h3 class="mb-4">{{registerViewLabels.pageTitle}}</h3>
+                      </div>
+                      <div class="w-100">
+                        <p class="social-media d-flex justify-content-end">
+                            <a href="javascript: void(0);" (click)="selectLanguage('ES')" class="btn btn-success rounded submit px-3"  class="social-icon d-flex align-items-center justify-content-center">ES</a>
+                            <a  href="javascript: void(0);" (click)="selectLanguage('EN')"  class="social-icon d-flex align-items-center justify-content-center">EN</a>
+                        </p>
+                    </div>
+                           
+                  </div>
+                    <form action="#" class="signin-form">
+                      <div class="form-group mt-3">
+                          <input [(ngModel)]="newCompany.legalName" type="text" name="username" class="form-control" required>
+                          <label class="form-control-placeholder" for="legalName">{{registerViewLabels.legalName}}</label>
+                      </div>
+                      <div class="form-group mt-3">
+                        <input  [(ngModel)]="newCompany.commercialName" type="text" name="commercialName" class="form-control" required>
+                        <label class="form-control-placeholder" for="companyName">{{registerViewLabels.companyName}}</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input  [(ngModel)]="newCompany.email" type="text" name="email" class="form-control" required>
+                        <label class="form-control-placeholder" for="email">{{registerViewLabels.email}}</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input  [(ngModel)]="newCompany.userName" type="text" name="userName" class="form-control" required>
+                        <label class="form-control-placeholder" for="userName">{{registerViewLabels.userName}}</label>
+                    </div>
+                    <div class="form-group">
+                        <input [(ngModel)]="newCompany.password" id="password-field"  type="password" name="password" class="form-control" required>
+                        <label class="form-control-placeholder" for="password">{{registerViewLabels.password}}</label>
+                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input [(ngModel)]="newCompany.phone" type="text" name="phone" class="form-control" required>
+                        <label class="form-control-placeholder" for="phone">{{registerViewLabels.phone}}</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input [(ngModel)]="newCompany.address" type="text" name="address" class="form-control" required>
+                        <label class="form-control-placeholder" for="address">{{registerViewLabels.address}}</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input [(ngModel)]="newCompany.contactName" type="text" name="contactName" class="form-control" required>
+                        <label class="form-control-placeholder" for="name">{{registerViewLabels.name}}</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input [(ngModel)]="newCompany.fiscalIdentificationNumber" type="text" name="fiscalIdentificationNumber" class="form-control" required>
+                        <label class="form-control-placeholder" for="name">{{registerViewLabels.fiscalID}}</label>
+                    </div>
+              
+                <div class="form-group">
+                    <!-- <button class="btn btn-primary"></button> -->
+                   
+                    <div *ngIf="processing" class="d-flex justify-content-center">
+                        <div  class="spinner-border text-primary" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    <button  *ngIf="!processing" (click)="register()"  style="width: 100%;background-color: #007bff;color: white;" class="btn btn-success rounded submit px-3">{{registerViewLabels.registerButton}}</button>
+                </div>
+                <div class="form-group d-md-flex">
+              
+                </div>
+              </form>
+            </div>
+          </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './services/Authentication/authentication.service';
 
 @Component({
   selector: 'app-root',

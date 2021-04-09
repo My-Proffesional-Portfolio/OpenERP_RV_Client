@@ -5,7 +5,8 @@ import { ClientsComponent } from './pages/clients/clients.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
-import { AuthenticationService } from './services/authentication.service';
+import { RegisterComponent } from './pages/register/register.component';
+import { AuthenticationService } from './services/Authentication/authentication.service';
 debugger;
 const routes: Routes = [
   // {
@@ -32,6 +33,11 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+        
+      },
+      {
+        path: 'singup',
+        component: RegisterComponent,
         
       },
 ];

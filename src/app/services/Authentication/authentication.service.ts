@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import ServerEnvironment from './serverEnvironments';
+import ServerEnvironment from '../serverEnvironments';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,7 @@ export class AuthenticationService {
       UserName: userName,
       Password: password
     }
-
     return this.http.post(ServerEnvironment.baseURL + "Account/login", body);
-
   }
 
   getUserData = () => {

@@ -7,10 +7,11 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './helpers/auth.guard';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './services/Authentication/authentication.service';
 import { HomeComponent } from './pages/home/home.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
 import { ClientsComponent } from './pages/clients/clients.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { ClientsComponent } from './pages/clients/clients.component';
     LoginComponent,
     HomeComponent,
     MyOfficeComponent, 
-    ClientsComponent
+    ClientsComponent, RegisterComponent
   ],
   imports: [
     BrowserModule,
