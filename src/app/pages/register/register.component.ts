@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { debug } from 'console';
 import { SignUpModels } from 'src/app/models/Register/SignupModels';
 import { AuthenticationService } from 'src/app/services/Authentication/authentication.service';
 import { SingupService } from 'src/app/services/Register/singup.service';
@@ -18,11 +17,12 @@ export class RegisterComponent implements OnInit {
 
   registerViewLabels: any;
   newCompany: SignUpModels.NewCompanyOrganizationModel;
+  selectedLanguage: string = "ES"
 
   ngOnInit(): void {
     this.newCompany = <SignUpModels.NewCompanyOrganizationModel>
     { fiscalIdentificationNumber: "XAXX010101000"};
-    this.selectLanguage("ES");
+    this.selectLanguage(this.selectedLanguage);
   }
 
   selectLanguage(language: string)
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     debugger;
     if (language == 'ES')
     {
-
+      this.selectedLanguage = 'ES';
       this.registerViewLabels = {
 
         pageTitle : "Registro",
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
 
     if (language == 'EN')
     {
-
+      this.selectedLanguage = 'EN';
       this.registerViewLabels = {
 
         pageTitle : "Singup",
@@ -73,6 +73,18 @@ export class RegisterComponent implements OnInit {
 
   register()
   {
+    this.errorLabel = null;
+    debugger;
+    if (!this.newCompany.legalName || !this.newCompany.commercialName
+      || !this.newCompany.fiscalIdentificationNumber || !this.newCompany.fiscalIdentificationNumber
+      || !this.newCompany.userName ||  !this.newCompany.password 
+      || !this.newCompany.email ||  !this.newCompany.contactName )
+      {
+        this.errorLabel = this.selectedLanguage == 'ES' ? "Llena todos los campos obligatorios":
+        "Fill all mandatory fields"
+        return;
+      }
+
     this.processing = true;
     this.SignUpService.register(this.newCompany).subscribe((data: any) => {
       debugger;
