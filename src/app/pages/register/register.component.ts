@@ -113,7 +113,7 @@ export class RegisterComponent implements OnInit {
         this.errorLabel = data.errorMessages[0];
       }
       else{
-        this.authorizationService.currentUser = data;
+        //this.authorizationService.currentUser = data;
         localStorage.setItem("userData", JSON.stringify(data));
         
         this.router.navigate(['/']);

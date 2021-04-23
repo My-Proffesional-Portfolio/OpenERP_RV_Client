@@ -8,7 +8,6 @@ import ServerEnvironment from '../serverEnvironments';
 export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
-  public currentUser: any = null;
 
   login (userName: string, password)
   {
