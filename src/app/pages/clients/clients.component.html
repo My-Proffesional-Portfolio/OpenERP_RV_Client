@@ -1,1 +1,30 @@
-<p>clients works!</p>
+<div class="table-responsive"> 
+  <table class="table table-hover">
+      <thead style="background-color: #007bff; color:white; font-size: small;">
+        <tr>
+          <th># Cliente</th>
+          <th>Nombre</th>
+          <th>Contacto</th>
+          <th>Id. Fiscal</th>
+          <th>Nombre Legal</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="font-size: small;" *ngFor="let c of clientsData.items; index as i;">
+          <td>{{c.number}}</td>
+          <td>{{c.companyName}}</td>
+          <td>{{c.contactName}}</td>
+          <td>{{c.fiscalTaxID}}</td>
+          <td>{{c.LegalName}}</td>
+          <td>{{c.Email}}</td>
+          <td>{{c.Phone}}</td>
+          <th><i class="fa fa-pencil" aria-hidden="true" style="font-size:17px;"></i></th>
+          <th><i class="fa fa-ban" aria-hidden="true" style="font-size:17px;"></i></th>
+        </tr>
+      </tbody>
+    </table>
+ </div>
