@@ -14,25 +14,27 @@ export class ClientService {
   httpHeaders :HttpHeaders;
  
   private initHeaders() {
-    debugger;
-    this.httpHeaders = new HttpHeaders();
-    this.httpHeaders.append('Content-Type', 'application/json');
-    this.httpHeaders.append("Authorization", "Bearer " + this.authService.getUserData().token);
-    return this.httpHeaders;
-  }
-
-  getClients(){
-    debugger;
-    // const httpOptions = {
-    //   headers: this.initHeaders()
-    // };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.authService.getUserData().token}`
     })
+    return headers;
+  }
+
+  getClients(){
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${this.authService.getUserData().token}`
+    // })
+    const headers = this.initHeaders();
 
     return this.http.get(ServerEnvironment.baseURL + "client", {headers: headers});
   }
  
+  addClient(newClient)
+  {
+    const headers = this.initHeaders();
+    return this.http.post(ServerEnvironment.baseURL + "client", newClient, {headers: headers});
+  }
 
 }

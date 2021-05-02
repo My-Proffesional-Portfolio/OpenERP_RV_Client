@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/Authentication/authentication.service';
 import { ClientService } from 'src/app/services/Clients/client.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-clients',
@@ -10,12 +10,16 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./clients.component.css']
 })
 export class ClientsComponent implements OnInit {
+  modal : NgbModalRef;
+  isVisibleTableSet: boolean = false;
+ 
 
   constructor(private clientService: ClientService, 
     private router : Router, 
     private authService: AuthenticationService,
     private modalService: NgbModal) { }
 
+  processing: boolean;
   clientsData: any;
   closeResult = '';
   selectedClient: any;
@@ -24,7 +28,11 @@ export class ClientsComponent implements OnInit {
   @ViewChild('csvReader') csvReader: any;  
 
   ngOnInit(): void {
+    this.getClients();
+  }
 
+
+  getClients() {
     this.clientService.getClients().
     subscribe((data: any)=> {
       debugger;
@@ -39,7 +47,6 @@ export class ClientsComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       });
-
   }
 
   open(content, index) {
@@ -70,13 +77,10 @@ export class ClientsComponent implements OnInit {
   openBatchLoad(content) {
 
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      alert("Call client delete service ");
-
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+   this.modal =  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+   this.modal.result.then((e) => {
+      console.log("dialogo cerrado")
+  });  
   }
 
   download() {
@@ -125,8 +129,8 @@ export class ClientsComponent implements OnInit {
   }  
 
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {  
-    let csvArr = [];  
     this.newClients = [];
+    debugger;
   
     for (let i = 1; i < csvRecordsArray.length; i++) {  
       let curruntRecord = (<string>csvRecordsArray[i]).split(',');  
@@ -163,9 +167,27 @@ export class ClientsComponent implements OnInit {
     return file.name.endsWith(".csv");  
   } 
 
-  importFile(){
+  public GetCurrentUserInformation(newClient): Promise<any>{
+    return this.clientService.addClient(newClient).toPromise();
+  }
+
+  async importFile(){
+    this.processing = true;
+    for (var i = 0; i < this.newClients.length; i++)
+    {
+      await this.GetCurrentUserInformation(this.newClients[i]);
+    }
+    this.processing = false;
+    this.modal.close();
+    this.getClients();
+
     
   }
+
+  setConfirmationTableVisible (){
+    this.isVisibleTableSet = true;
+  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
