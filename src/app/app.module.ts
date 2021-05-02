@@ -12,6 +12,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
 import { ClientsComponent } from './pages/clients/clients.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClientModalContentComponent } from './components/client-modal-content/client-modal-content.component';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,14 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     HomeComponent,
     MyOfficeComponent, 
-    ClientsComponent, RegisterComponent
+    ClientsComponent, RegisterComponent, ClientModalContentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [AuthenticationService, AuthGuard],
   bootstrap: [AppComponent]

@@ -22,9 +22,93 @@
           <td>{{c.LegalName}}</td>
           <td>{{c.Email}}</td>
           <td>{{c.Phone}}</td>
-          <th><i class="fa fa-pencil" aria-hidden="true" style="font-size:17px;"></i></th>
-          <th><i class="fa fa-ban" aria-hidden="true" style="font-size:17px;"></i></th>
+          <th><i class="fa fa-pencil" (click)="open(content, i)" aria-hidden="true" style="font-size:17px;"></i></th>
+          <th><i class="fa fa-ban" (click)="openDelete(contentDelete, i)"  aria-hidden="true" style="font-size:17px;"></i></th>
         </tr>
       </tbody>
     </table>
  </div>
+
+
+ <ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cliente # {{selectedClient.number}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 mx-auto">
+            <form>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="inputFirstname">Nombre comercial</label>
+                        <input type="text" [(ngModel)]="selectedClient.companyName" name="commercialName" class="form-control"  placeholder="First name">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="inputLastname">Razón Social</label>
+                        <input type="text" [(ngModel)]="selectedClient.legalName" name="legalName" class="form-control" id="inputLastname" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="inputAddressLine1">RFC</label>
+                        <input type="text" [(ngModel)]="selectedClient.fiscalTaxID" name="RFC" class="form-control" id="inputAddressLine1" placeholder="Street Address">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="inputAddressLine2">Teléfono</label>
+                        <input type="text" class="form-control" id="inputAddressLine2" placeholder="Line 2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label for="inputCity">Dirección</label>
+                        <input type="text" [(ngModel)]="selectedClient.fiscalAddress" name="fiscalAddress" class="form-control" id="inputCity" placeholder="City">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                      <label for="inputWebsite">Correo</label>
+                      <input type="text" class="form-control" id="inputWebsite" placeholder="Website">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="inputWebsite">Contacto</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="Website">
+                    </div>
+                </div>
+               
+            </form>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cliente # {{selectedClient.number}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 mx-auto">
+            <form>
+              <p style="font-size: small; font-weight: bold;">¿Estás seguro que quieres eliminar éste cliente? Presiona OK para eliminarlo</p>
+               
+            </form>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">OK</button>
+  </div>
+</ng-template>
+
+<hr>
+
+<pre>{{ closeResult }}</pre>
