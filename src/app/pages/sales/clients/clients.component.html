@@ -1,34 +1,47 @@
-<div class="table-responsive"> 
-  <table class="table table-hover">
-      <thead style="background-color: #007bff; color:white; font-size: small;">
-        <tr>
-          <th># Cliente</th>
-          <th>Nombre</th>
-          <th>Contacto</th>
-          <th>Id. Fiscal</th>
-          <th>Nombre Legal</th>
-          <th>Correo</th>
-          <th>Teléfono</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="font-size: small;" *ngFor="let c of clientsData.items; index as i;">
-          <td>{{c.number}}</td>
-          <td>{{c.companyName}}</td>
-          <td>{{c.contactName}}</td>
-          <td>{{c.fiscalTaxID}}</td>
-          <td>{{c.LegalName}}</td>
-          <td>{{c.Email}}</td>
-          <td>{{c.Phone}}</td>
-          <th><i class="fa fa-pencil" (click)="open(content, i)" aria-hidden="true" style="font-size:17px;"></i></th>
-          <th><i class="fa fa-ban" (click)="openDelete(contentDelete, i)"  aria-hidden="true" style="font-size:17px;"></i></th>
-        </tr>
-      </tbody>
-    </table>
- </div>
 
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Clientes</h3>
+  </div>
+  <div class="col-sm-6">
+    <button class="btn btn-primary pull-right" (click)="openBatchLoad(contentUploadBatchClients)" style="margin-left: 10px;">Cargar</button>
+    <button class="btn btn-success pull-right" (click)="openBatchLoad(contentUploadBatchClients)">Descargar</button>
+  </div>
+</div>
+
+<br />
+<div class="row">
+  <div class="table-responsive"> 
+    <table class="table table-hover">
+        <thead style="background-color: #007bff; color:white; font-size: small;">
+          <tr>
+            <th># Cliente</th>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Id. Fiscal</th>
+            <th>Nombre Legal</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="font-size: small;" *ngFor="let c of clientsData.items; index as i;">
+            <td>{{c.number}}</td>
+            <td>{{c.companyName}}</td>
+            <td>{{c.contactName}}</td>
+            <td>{{c.fiscalTaxID}}</td>
+            <td>{{c.legalName}}</td>
+            <td>{{c.Email}}</td>
+            <td>{{c.Phone}}</td>
+            <th><i class="fa fa-pencil" (click)="open(content, i)" aria-hidden="true" style="font-size:17px;"></i></th>
+            <th><i class="fa fa-ban" (click)="openDelete(contentDelete, i)"  aria-hidden="true" style="font-size:17px;"></i></th>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
 
  <ng-template #content let-modal>
   <div class="modal-header">
@@ -108,6 +121,54 @@
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">OK</button>
   </div>
 </ng-template>
+
+<ng-template #contentUploadBatchClients let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Subida de clientes</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 mx-auto">
+            <form style="text-align: center;">
+              <p style="font-size: medium;">Descarga la plantilla csv para subir los clientes aqui: </p>
+              <button  (click)="download()" class="btn btn-success" style="text-align: center;">Descarga</button>
+              <br />
+              <p style="font-size: medium;">Una vez llena la plantilla, cargala para iniciar la importación</p>
+              <input type="file" (change)="uploadListener($event)" accept=".csv">
+              <p>Clientes a cargar {{newClients.length}}</p>
+              <div *ngIf="newClients.length > 0" class="table-responsive"> 
+                <table class="table table-hover">
+                    <thead style="background-color: #007bff; color:white; font-size: small;">
+                      <tr>
+                        <th>Razón social</th>
+                        <th>Contacto</th>
+                        <th>RFC</th>
+                        <th>Correo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="font-size: small;" *ngFor="let c of newClients; index as i;">
+                        <td>{{c.legalName}}</td>
+                        <td>{{c.contactName}}</td>
+                        <td>{{c.fiscalTaxID}}</td>
+                        <td>{{c.email}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+               <button  (click)="importFile()" class="btn btn-warning" style="text-align: center;">Importar</button>
+               </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">OK</button>
+  </div>
+</ng-template>
+
 
 <hr>
 

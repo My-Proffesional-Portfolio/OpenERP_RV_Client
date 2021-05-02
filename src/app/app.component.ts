@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from './helpers/auth.guard';
-import { ClientsComponent } from './pages/clients/clients.component';
+import { ClientsComponent } from './pages/sales/clients/clients.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
 import { AuthenticationService } from './services/Authentication/authentication.service';
+import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.component';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,13 @@ export class AppComponent {
 
     this.router.config.push(
       { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: 'sales', component: SalesIndexComponent, canActivate: [AuthGuard] },
       { path: 'clients', component: ClientsComponent, canActivate: [AuthGuard] },
       { path: 'profile', component: MyOfficeComponent, canActivate: [AuthGuard] })
   
     this.links.push(
       { text: "Principal", path: "" },
-      { text: "Clientes", path: "clients" },
+      { text: "Ventas", path: "sales" },
       { text: "Perfil de empresa", path: "profile" },
       )
       

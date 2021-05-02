@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './helpers/auth.guard';
-import { ClientsComponent } from './pages/clients/clients.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';

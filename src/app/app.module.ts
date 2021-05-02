@@ -10,10 +10,11 @@ import { AuthGuard } from './helpers/auth.guard';
 import { AuthenticationService } from './services/Authentication/authentication.service';
 import { HomeComponent } from './pages/home/home.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
-import { ClientsComponent } from './pages/clients/clients.component';
+import { ClientsComponent } from './pages/sales/clients/clients.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClientModalContentComponent } from './components/client-modal-content/client-modal-content.component';
+import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ClientModalContentComponent } from './components/client-modal-content/c
     LoginComponent,
     HomeComponent,
     MyOfficeComponent, 
+    SalesIndexComponent,
     ClientsComponent, RegisterComponent, ClientModalContentComponent
   ],
   imports: [
