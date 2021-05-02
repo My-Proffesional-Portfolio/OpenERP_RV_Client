@@ -33,15 +33,24 @@
             <td>{{c.contactName}}</td>
             <td>{{c.fiscalTaxID}}</td>
             <td>{{c.legalName}}</td>
-            <td>{{c.Email}}</td>
-            <td>{{c.Phone}}</td>
+            <td>{{c.email}}</td>
+            <td>{{c.phone}}</td>
             <th><i class="fa fa-pencil" (click)="open(content, i)" aria-hidden="true" style="font-size:17px;"></i></th>
             <th><i class="fa fa-ban" (click)="openDelete(contentDelete, i)"  aria-hidden="true" style="font-size:17px;"></i></th>
           </tr>
         </tbody>
       </table>
   </div>
+ 
 </div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+    <li *ngIf="currentPage != 0" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="previousPage()">Atrás</a></li>
+    <li *ngFor="let p of pageLinks" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="goToPage(p)">{{p +1}}</a></li>
+    <li *ngIf="currentPage != totalPages -1" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="nextPage()">Siguiente</a></li>
+  </ul>
+</nav>
 
  <ng-template #content let-modal>
   <div class="modal-header">

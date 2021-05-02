@@ -21,14 +21,14 @@ export class ClientService {
     return headers;
   }
 
-  getClients(){
+  getClients(page, itemsPerPage){
     // const headers = new HttpHeaders({
     //   'Content-Type': 'application/json',
     //   'Authorization': `Bearer ${this.authService.getUserData().token}`
     // })
     const headers = this.initHeaders();
 
-    return this.http.get(ServerEnvironment.baseURL + "client", {headers: headers});
+    return this.http.get(ServerEnvironment.baseURL + `client?currentPage=${page}&pageSize=10`, {headers: headers});
   }
  
   addClient(newClient)

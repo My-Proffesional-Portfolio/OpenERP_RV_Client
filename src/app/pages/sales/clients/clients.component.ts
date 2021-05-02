@@ -12,7 +12,10 @@ import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-boots
 export class ClientsComponent implements OnInit {
   modal : NgbModalRef;
   isVisibleTableSet: boolean = false;
- 
+  itemsPerPage: number = 10;
+  currentPage: number = 0;
+  totalPages: number;
+  pageLinks: number[];
 
   constructor(private clientService: ClientService, 
     private router : Router, 
@@ -31,12 +34,29 @@ export class ClientsComponent implements OnInit {
     this.getClients();
   }
 
+  nextPage(){
+    this.currentPage++;
+    this.getClients();
+  }
+
+  previousPage(){
+    this.currentPage--;
+    this.getClients();
+  }
+
+  goToPage(pageNumber)
+  {
+    this.currentPage = pageNumber;
+    this.getClients();
+  }
 
   getClients() {
-    this.clientService.getClients().
+    this.clientService.getClients(this.currentPage, this.itemsPerPage).
     subscribe((data: any)=> {
       debugger;
       this.clientsData = data;
+      this.totalPages = data.totalPages;
+      this.pageLinks =[...Array(this.totalPages)].map((_,i) => i);
 
     },(errorEvent) => {
         debugger;
@@ -56,10 +76,8 @@ export class ClientsComponent implements OnInit {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
   
   openDelete(content, index) {
 
@@ -70,7 +88,6 @@ export class ClientsComponent implements OnInit {
       alert("Call client delete service ");
 
     }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 
@@ -142,7 +159,7 @@ export class ClientsComponent implements OnInit {
         csvRecord.fiscalTaxID = curruntRecord[3];  
         csvRecord.phone = curruntRecord[4];  
         csvRecord.email = curruntRecord[5];  
-        csvRecord.address = curruntRecord[5];  
+        csvRecord.fiscalAddress = curruntRecord[6];  
         this.newClients.push(csvRecord);  
       }  
     }  
@@ -167,15 +184,16 @@ export class ClientsComponent implements OnInit {
     return file.name.endsWith(".csv");  
   } 
 
-  public GetCurrentUserInformation(newClient): Promise<any>{
+  public addAwaitedClient(newClient): Promise<any>{
     return this.clientService.addClient(newClient).toPromise();
   }
 
+  // https://stackoverflow.com/questions/47605737/how-to-make-a-synchronous-call-in-angular-5
   async importFile(){
     this.processing = true;
     for (var i = 0; i < this.newClients.length; i++)
     {
-      await this.GetCurrentUserInformation(this.newClients[i]);
+      await this.addAwaitedClient(this.newClients[i]);
     }
     this.processing = false;
     this.modal.close();
@@ -186,17 +204,6 @@ export class ClientsComponent implements OnInit {
 
   setConfirmationTableVisible (){
     this.isVisibleTableSet = true;
-  }
-
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
 }
