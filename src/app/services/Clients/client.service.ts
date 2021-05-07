@@ -28,7 +28,7 @@ export class ClientService {
     // })
     const headers = this.initHeaders();
 
-    return this.http.get(ServerEnvironment.baseURL + `client?currentPage=${page}&pageSize=10`, {headers: headers});
+    return this.http.get(ServerEnvironment.baseURL + `client?currentPage=${page}&pageSize=${itemsPerPage}`, {headers: headers});
   }
  
   addClient(newClient)

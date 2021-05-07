@@ -4,6 +4,13 @@ import { AuthenticationService } from 'src/app/services/Authentication/authentic
 import { ClientService } from 'src/app/services/Clients/client.service';
 import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
+interface IItemsPerPage
+{
+  text: string;
+  value: number;
+
+}
+
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
@@ -16,6 +23,7 @@ export class ClientsComponent implements OnInit {
   currentPage: number = 0;
   totalPages: number;
   pageLinks: number[];
+  viewPageLinks: number[];
 
   constructor(private clientService: ClientService, 
     private router : Router, 
@@ -27,10 +35,20 @@ export class ClientsComponent implements OnInit {
   closeResult = '';
   selectedClient: any;
   newClients: any[] = [];
+  itemsPerPageOptionValue: Array<IItemsPerPage>;
+  selectedItemPerPageOption: IItemsPerPage;
   public records: any[] = [];  
   @ViewChild('csvReader') csvReader: any;  
 
   ngOnInit(): void {
+    // this.itemsPerPageOptionValue = [10, 25, 100, 500]
+    this.itemsPerPageOptionValue = new Array<IItemsPerPage>();
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "10 (Predeterminado)", value: 10})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "25", value: 25})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "50", value: 50})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "100", value: 100})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "500 (No recomendado)", value: 500})
+    this.selectedItemPerPageOption = this.itemsPerPageOptionValue[0];
     this.getClients();
   }
 
@@ -57,6 +75,7 @@ export class ClientsComponent implements OnInit {
       this.clientsData = data;
       this.totalPages = data.totalPages;
       this.pageLinks =[...Array(this.totalPages)].map((_,i) => i);
+      this.setPageLinks();
 
     },(errorEvent) => {
         debugger;
@@ -68,6 +87,37 @@ export class ClientsComponent implements OnInit {
         }
       });
   }
+
+  manageItemsPerPage(event)
+  {
+    debugger;
+    this.itemsPerPage = this.selectedItemPerPageOption.value;
+    this.currentPage = 0;
+    this.getClients();
+  }
+
+  setPageLinks ()
+  {
+    debugger;
+    this.viewPageLinks  = [];
+    var pageCounter = 0;
+
+      for(var cp = this.currentPage - 3; pageCounter < 7; cp++)
+      {
+
+        if (cp >= 0){
+          this.viewPageLinks[pageCounter] = cp;
+          pageCounter++;
+        }
+
+        if (cp == this.totalPages -1)
+          break;
+
+      
+      }
+
+      console.log(this.viewPageLinks);
+  } 
 
   open(content, index) {
 
