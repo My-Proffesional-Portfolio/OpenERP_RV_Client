@@ -2,6 +2,8 @@
 <div class="row">
   <div class="col-sm-6">
     <h3>Clientes</h3>
+    <br>
+    <p>{{totalItems}} Clientes encontrados</p>
   </div>
   <div class="col-sm-6">
     <button class="btn btn-primary pull-right" (click)="openBatchLoad(contentUploadBatchClients)" style="margin-left: 10px;">Cargar</button>
@@ -48,9 +50,9 @@
 
   <div class="col-sm-6">
     <!-- <h5>Página {{currentPage + 1}} de {{totalPages}}</h5> -->
-    <p style="font-size: small;">Elementos por página: </p>
+    <!-- <p style="font-size: small;">Elementos por página: </p> -->
     <!-- https://stackoverflow.com/questions/37968712/angular-2-setting-selected-value-on-dropdown-list -->
-    <select [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
+    <select class="form-control" [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
       <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x" >{{x.text}}</option>
   </select>
   <!-- <select [(ngModel)]="selectedItemPerPageOption.value" (change)="manageItemsPerPage($event)">

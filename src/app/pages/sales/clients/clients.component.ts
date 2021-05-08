@@ -24,6 +24,7 @@ export class ClientsComponent implements OnInit {
   totalPages: number;
   pageLinks: number[];
   viewPageLinks: number[];
+  totalItems: number;
 
   constructor(private clientService: ClientService, 
     private router : Router, 
@@ -43,11 +44,11 @@ export class ClientsComponent implements OnInit {
   ngOnInit(): void {
     // this.itemsPerPageOptionValue = [10, 25, 100, 500]
     this.itemsPerPageOptionValue = new Array<IItemsPerPage>();
-    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "10 (Predeterminado)", value: 10})
-    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "25", value: 25})
-    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "50", value: 50})
-    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "100", value: 100})
-    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "500 (No recomendado)", value: 500})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "10 elementos por página", value: 10})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "25 elementos por página", value: 25})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "50 elementos por página", value: 50})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "100 elementos por página", value: 100})
+    this.itemsPerPageOptionValue.push(<IItemsPerPage>{text: "500 elementos por página", value: 500})
     this.selectedItemPerPageOption = this.itemsPerPageOptionValue[0];
     this.getClients();
   }
@@ -74,6 +75,7 @@ export class ClientsComponent implements OnInit {
       debugger;
       this.clientsData = data;
       this.totalPages = data.totalPages;
+      this.totalItems = data.totalItems;
       this.pageLinks =[...Array(this.totalPages)].map((_,i) => i);
       this.setPageLinks();
 
@@ -104,7 +106,6 @@ export class ClientsComponent implements OnInit {
 
       for(var cp = this.currentPage - 3; pageCounter < 7; cp++)
       {
-
         if (cp >= 0){
           this.viewPageLinks[pageCounter] = cp;
           pageCounter++;
@@ -112,10 +113,7 @@ export class ClientsComponent implements OnInit {
 
         if (cp == this.totalPages -1)
           break;
-
-      
       }
-
       console.log(this.viewPageLinks);
   } 
 
