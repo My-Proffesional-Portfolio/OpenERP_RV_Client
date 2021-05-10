@@ -7,7 +7,10 @@
   </div>
   <div class="col-sm-6">
     <button class="btn btn-primary pull-right" (click)="openBatchLoad(contentUploadBatchClients)" style="margin-left: 10px;">Cargar</button>
-    <button class="btn btn-success pull-right" (click)="openBatchLoad(contentUploadBatchClients)">Descargar</button>
+    <button *ngIf="!downloadProcessing" class="btn btn-success pull-right" (click)="getClientsForDownload()">Descargar</button>
+    <div *ngIf="downloadProcessing"  class="spinner-border text-primary pull-right" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </div>
 
@@ -52,14 +55,18 @@
     <!-- <h5>Página {{currentPage + 1}} de {{totalPages}}</h5> -->
     <!-- <p style="font-size: small;">Elementos por página: </p> -->
     <!-- https://stackoverflow.com/questions/37968712/angular-2-setting-selected-value-on-dropdown-list -->
-    <select class="form-control" [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
+    <!-- <select class="form-control" [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
       <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x" >{{x.text}}</option>
-  </select>
+  </select> -->
   <!-- <select [(ngModel)]="selectedItemPerPageOption.value" (change)="manageItemsPerPage($event)">
     <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x.value" >{{x.text}}</option>
 </select> -->
  </div>
  <div class="col-sm-6">
+  <select class="form-control" [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
+    <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x" >{{x.text}}</option>
+</select>
+  <br/>
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
       <li *ngIf="currentPage != 0" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="previousPage()">Atrás</a></li>

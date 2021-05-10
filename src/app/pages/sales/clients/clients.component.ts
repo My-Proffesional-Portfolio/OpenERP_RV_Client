@@ -25,6 +25,7 @@ export class ClientsComponent implements OnInit {
   pageLinks: number[];
   viewPageLinks: number[];
   totalItems: number;
+  downloadProcessing: boolean;
 
   constructor(private clientService: ClientService, 
     private router : Router, 
@@ -87,6 +88,44 @@ export class ClientsComponent implements OnInit {
           this.authService.logout();
           this.router.navigate(['/login']);
         }
+      });
+  }
+
+  getClientsForDownload() {
+    this.downloadProcessing =  true;
+    this.clientService.getClients(this.currentPage, 1000000).
+    subscribe((data: any)=> {
+      debugger;
+      var element = document.createElement('a');
+      var text = "Num. Cliente, Nombre empresa, Razón social, Contacto, RFC, Teléfono, Email, Dirección fiscal\n";
+      for(var i = 0; i < data.items.length; i++)
+      {
+        var client = data.items[i];
+        text+= client.number + "," + client.companyName + "," 
+        + client.legalName + "," + client.contactName + "," + client.fiscalTaxID + ","
+        + client.phone + "," + client.email + "," + client.fiscalAddress + "\n";
+      }
+      element.setAttribute('href', 'data:text/plain;charset=unicode,' + encodeURIComponent(text));
+      element.setAttribute('download', "Catalogo clientes.csv");
+    
+      element.style.display = 'none';
+      document.body.appendChild(element);
+    
+      element.click();
+    
+      document.body.removeChild(element);
+      this.downloadProcessing =  false;
+
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401)
+        {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+          this.downloadProcessing =  false;
+        }
+        this.downloadProcessing =  false;
       });
   }
 
