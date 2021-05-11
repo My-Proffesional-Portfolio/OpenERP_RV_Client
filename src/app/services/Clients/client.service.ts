@@ -37,4 +37,38 @@ export class ClientService {
     return this.http.post(ServerEnvironment.baseURL + "client", newClient, {headers: headers});
   }
 
+  downloadClientsCsvTemplate() {
+    var element = document.createElement('a');
+    var text = "Nombre empresa, Razón social, Contacto, RFC, Teléfono, Email, Dirección fiscal"
+    element.setAttribute('href', 'data:text/plain;charset=unicode,' + encodeURIComponent(text));
+    element.setAttribute('download', "Clientes.csv");
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
+
+  getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {  
+     var newClients = [];
+    debugger;
+  
+    for (let i = 1; i < csvRecordsArray.length; i++) {  
+      let curruntRecord = (<string>csvRecordsArray[i]).split(',');  
+      if (curruntRecord.length == headerLength) {  
+        let csvRecord: any = {};  
+        csvRecord.companyName = curruntRecord[0];  
+        csvRecord.legalName = curruntRecord[1];  
+        csvRecord.contactName = curruntRecord[2];  
+        csvRecord.fiscalTaxID = curruntRecord[3];  
+        csvRecord.phone = curruntRecord[4];  
+        csvRecord.email = curruntRecord[5];  
+        csvRecord.fiscalAddress = curruntRecord[6];  
+        newClients.push(csvRecord);  
+      }  
+    }  
+    return newClients;  
+  } 
 }

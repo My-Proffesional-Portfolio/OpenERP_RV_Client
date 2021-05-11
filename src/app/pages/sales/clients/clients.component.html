@@ -69,9 +69,14 @@
   <br/>
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
+      <li *ngIf="currentPage != 0" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="firstPage()"><<</a></li>
       <li *ngIf="currentPage != 0" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="previousPage()">Atrás</a></li>
-      <li *ngFor="let p of viewPageLinks" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="goToPage(p)">{{p +1}}</a></li>
+      <li *ngFor="let p of viewPageLinks" class="page-item">
+        <a *ngIf="currentPage !== p" class="page-link" href="javascript:void(0)" (click)="goToPage(p)">{{p +1}}</a>
+        <a *ngIf="currentPage === p" class="page-link">{{p+1}}</a>
+      </li>
       <li *ngIf="currentPage != totalPages -1" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="nextPage()">Siguiente</a></li>
+      <li *ngIf="currentPage != totalPages -1" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="lastPage()">>></a></li>
     </ul>
   </nav>
 </div>
@@ -169,7 +174,7 @@
         <div class="col-sm-12 mx-auto">
             <form style="text-align: center;">
               <p style="font-size: medium;">Descarga la plantilla csv para subir los clientes aqui: </p>
-              <button  (click)="download()" class="btn btn-success" style="text-align: center;">Descarga</button>
+              <button  (click)="downloadTemplate()" class="btn btn-success" style="text-align: center;">Descarga</button>
               <br />
               <p style="font-size: medium;">Una vez llena la plantilla, cargala para iniciar la importación</p>
               <input type="file" (change)="uploadListener($event)" accept=".csv">
