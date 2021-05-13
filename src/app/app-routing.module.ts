@@ -5,7 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { MyOfficeComponent } from './pages/my-office/my-office.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { AuthenticationService } from './services/Authentication/authentication.service';
+import { AuthenticationService } from './services/Accounts/Authentication/authentication.service';
 debugger;
 const routes: Routes = [
   // {

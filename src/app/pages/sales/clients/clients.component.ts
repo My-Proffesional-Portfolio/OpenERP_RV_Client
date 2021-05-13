@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/Authentication/authentication.service';
-import { ClientService } from 'src/app/services/Clients/client.service';
+import { AuthenticationService } from 'src/app/services/Accounts/Authentication/authentication.service';
+import { ClientService } from 'src/app/services/Sales/Clients/client.service';
 import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { FilesService } from 'src/app/services/Utils/files.service';
 import { PaginationModel } from 'src/app/models/Utils/Pagination';

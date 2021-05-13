@@ -18,4 +18,9 @@ export class SalesIndexComponent implements OnInit {
     this.router.navigate(['/clients']);
   }
 
+  goToProducts(){
+
+    this.router.navigate(['/products']);
+  }
+
 }
