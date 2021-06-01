@@ -1,0 +1,16 @@
+<div style="text-align: center;">
+    <h3>Ingreso de gastos</h3>
+    <input type="file" id="file" (change)="handleFileInput($event.target.files)" multiple>
+</div>
+<!-- <button class="btn btn-primary" (click)="saveFile()">Procesar</button> -->
+
+
+<div *ngIf="expenseData" class="card bg-light">
+    <div class="card-body" style="text-align: center;">
+        <div style="font-family:'Courier New', Courier, monospace">
+            <h6>Gasto guardado con éxito</h6>
+            <h3>Proveedor: {{expenseData.supplierName}}</h3>
+            <h5>RFC: {{expenseData.supplierTaxID}}</h5>
+        </div>
+    </div>
+</div>

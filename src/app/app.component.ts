@@ -7,6 +7,7 @@ import { MyOfficeComponent } from './pages/my-office/my-office.component';
 import { AuthenticationService } from './services/Accounts/Authentication/authentication.service';
 import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.component';
 import { ProductsComponent } from './pages/sales/products/products.component';
+import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,9 @@ export class AppComponent {
       { path: 'sales', component: SalesIndexComponent, canActivate: [AuthGuard] },
       { path: 'clients', component: ClientsComponent, canActivate: [AuthGuard] },
       { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
-      { path: 'profile', component: MyOfficeComponent, canActivate: [AuthGuard] })
+      { path: 'profile', component: MyOfficeComponent, canActivate: [AuthGuard] },
+      { path: 'upload', component: LoadComponent, canActivate: [AuthGuard] }),
+      
   
     this.links.push(
       { text: "Principal", path: "" },

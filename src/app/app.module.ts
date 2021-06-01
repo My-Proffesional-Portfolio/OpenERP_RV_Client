@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClientModalContentComponent } from './components/client-modal-content/client-modal-content.component';
 import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.component';
 import { ProductsComponent } from './pages/sales/products/products.component';
+import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { ProductsComponent } from './pages/sales/products/products.component';
     MyOfficeComponent, 
     SalesIndexComponent,
     ProductsComponent,
-    ClientsComponent, RegisterComponent, ClientModalContentComponent
+    ClientsComponent, 
+    RegisterComponent, 
+    ClientModalContentComponent, 
+    LoadComponent
   ],
   imports: [
     BrowserModule,
