@@ -18,6 +18,7 @@ import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.compo
 import { ProductsComponent } from './pages/sales/products/products.component';
 import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
 import { ExpenseListComponent } from './pages/purchases/Expenses/expense-list/expense-list.component';
+import { PurchasesIndexComponent } from './pages/purchases/purchases-index/purchases-index.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { ExpenseListComponent } from './pages/purchases/Expenses/expense-list/ex
     RegisterComponent, 
     ClientModalContentComponent, 
     LoadComponent, 
-    ExpenseListComponent
+    ExpenseListComponent, PurchasesIndexComponent
   ],
   imports: [
     BrowserModule,
