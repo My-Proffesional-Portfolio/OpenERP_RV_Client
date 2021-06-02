@@ -14,6 +14,52 @@
     </div>
   </div>
   
+  <p>
+    <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+      aria-controls="collapseExample">
+      Filtros <i class="fa fa-filter"></i>
+    </button>
+  </p>
+  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Palabra clave</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Proveedor, RFC " aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <label>Fecha de Expedición</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Inicio</span>
+          </div>
+          <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Fin</span>
+          </div>
+          <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+       
+        <label>Fecha de Carga</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Inicio</span>
+          </div>
+          <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Fin</span>
+          </div>
+          <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ <!-- Button triggers collapse -->
+
+
+
   <br />
   <div class="row">
     <div class="table-responsive"> 

@@ -18,6 +18,8 @@ export class ExpenseListComponent implements OnInit {
   currentPage: number = 0;
   totalPages: number;
 
+  public isCollapsed = true;
+
   constructor(private expenseService: ExpensesService, 
     private router : Router, 
     private authService: AuthenticationService,
