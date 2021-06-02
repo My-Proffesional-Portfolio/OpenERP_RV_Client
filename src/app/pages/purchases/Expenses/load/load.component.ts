@@ -27,6 +27,7 @@ export class LoadComponent implements OnInit {
       if (data.errorMessages != undefined && data.errorMessages.length > 0 )
       {
         this.errorMessage = "Ha ocurrido un error en el sistema: " + data.errorMessages[0];
+        this.processing = false;
         return;
 
       }

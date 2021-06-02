@@ -9,6 +9,7 @@ import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.compo
 import { ProductsComponent } from './pages/sales/products/products.component';
 import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
 import { ExpenseListComponent } from './pages/purchases/Expenses/expense-list/expense-list.component';
+import { PurchasesIndexComponent } from './pages/purchases/purchases-index/purchases-index.component';
 
 @Component({
   selector: 'app-root',
@@ -33,11 +34,14 @@ export class AppComponent {
       { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
       { path: 'profile', component: MyOfficeComponent, canActivate: [AuthGuard] },
       { path: 'expenses', component: ExpenseListComponent, canActivate: [AuthGuard] },
+      { path: 'purchases', component: PurchasesIndexComponent, canActivate: [AuthGuard] },
       { path: 'upload', component: LoadComponent, canActivate: [AuthGuard] }),
+      
       
   
     this.links.push(
       { text: "Principal", path: "" },
+      { text: "Compras", path: "purchases" },
       { text: "Ventas", path: "sales" },
       { text: "Perfil de empresa", path: "profile" },
       )
