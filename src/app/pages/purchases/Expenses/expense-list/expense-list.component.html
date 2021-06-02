@@ -1,0 +1,134 @@
+
+<div class="row">
+    <div class="col-sm-6">
+      <h3>Gastos</h3>
+      <br>
+      <p>{{totalItems}} gastos encontrados</p>
+    </div>
+    <div class="col-sm-6">
+      <button class="btn btn-primary pull-right" (click)="openBatchLoad(contentUploadCFDI)" style="margin-left: 10px;">Cargar CFDI</button>
+      <!-- <button *ngIf="!downloadProcessing" class="btn btn-success pull-right" (click)="getClientsForDownload()">Descargar</button>
+      <div *ngIf="downloadProcessing"  class="spinner-border text-primary pull-right" role="status">
+        <span class="sr-only">Loading...</span>
+      </div> -->
+    </div>
+  </div>
+  
+  <br />
+  <div class="row">
+    <div class="table-responsive"> 
+      <table class="table table-hover">
+          <thead style="background-color: #007bff; color:white; font-size: small;">
+            <tr>
+              <th>Proveedor</th>
+              <th>Proveedor</th>
+              <th>Fecha de gasto</th>
+              <th>RFC Receptor</th>
+              <th>Impuestos</th>
+              <th>Subtotal</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-size: small;" *ngFor="let e of expensesData.items; index as i;">
+              <td>{{e.supplierName}}</td>
+              <td>{{e.supplierTaxID}}</td>
+              <td>{{e.expenseDate}}</td>
+              <td>{{e.receiverTaxID}}</td>
+              <td>{{e.taxes | currency}}</td>
+              <td>{{e.subtotal | currency}}</td>
+              <td>{{e.total | currency}}</td>
+              <th><i class="fa fa-ban" (click)="openDelete(contentDelete, i)"  aria-hidden="true" style="font-size:17px;"></i></th>
+            </tr>
+            <tr style="font-size: small;">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{expensesData.subtotal | currency}}</td>
+                <td>{{expensesData.total | currency}}</td>
+                <th></th>
+              </tr>
+          </tbody>
+          
+        </table>
+    </div>
+   
+  </div>
+  
+  <div class="row">
+  
+    <div class="col-sm-6">
+      <!-- <h5>Página {{currentPage + 1}} de {{totalPages}}</h5> -->
+      <!-- <p style="font-size: small;">Elementos por página: </p> -->
+      <!-- https://stackoverflow.com/questions/37968712/angular-2-setting-selected-value-on-dropdown-list -->
+      <!-- <select class="form-control" [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
+        <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x" >{{x.text}}</option>
+    </select> -->
+    <!-- <select [(ngModel)]="selectedItemPerPageOption.value" (change)="manageItemsPerPage($event)">
+      <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x.value" >{{x.text}}</option>
+  </select> -->
+   </div>
+   <div class="col-sm-6">
+    <select class="form-control" [(ngModel)]="selectedItemPerPageOption" (change)="manageItemsPerPage($event)">
+      <option *ngFor="let x of itemsPerPageOptionValue" [ngValue]="x" >{{x.text}}</option>
+  </select>
+    <br/>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li *ngIf="currentPage != 0" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="firstPage()"><<</a></li>
+        <li *ngIf="currentPage != 0" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="previousPage()">Atrás</a></li>
+        <li *ngFor="let p of viewPageLinks" class="page-item">
+          <a *ngIf="currentPage !== p" class="page-link" href="javascript:void(0)" (click)="goToPage(p)">{{p +1}}</a>
+          <a *ngIf="currentPage === p" class="page-link">{{p+1}}</a>
+        </li>
+        <li *ngIf="currentPage != totalPages -1" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="nextPage()">Siguiente</a></li>
+        <li *ngIf="currentPage != totalPages -1" class="page-item"><a class="page-link" href="javascript:void(0)" (click)="lastPage()">>></a></li>
+      </ul>
+    </nav>
+  </div>
+  </div>
+  
+  <ng-template #contentDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Cliente # {{selectedClient.number}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12 mx-auto">
+              <form>
+                <p style="font-size: small; font-weight: bold;">¿Estás seguro que quieres eliminar éste cliente? Presiona OK para eliminarlo</p>
+                 
+              </form>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">OK</button>
+    </div>
+  </ng-template>
+  
+  <ng-template #contentUploadCFDI let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Carga de CFDI</h4>
+      <button type="button" class="close" aria-label="Close" (click)="resetSearch()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+       <app-load></app-load>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="resetSearch()">OK</button>
+    </div>
+  </ng-template>
+  
+  
+  <hr>
+  
+  <pre>{{ closeResult }}</pre>

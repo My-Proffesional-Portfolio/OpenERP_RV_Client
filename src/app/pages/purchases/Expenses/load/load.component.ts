@@ -7,22 +7,33 @@ import { ExpensesService } from 'src/app/services/Purchases/Expenses/expenses.se
   styleUrls: ['./load.component.css']
 })
 export class LoadComponent implements OnInit {
+  processing: boolean;
 
   constructor(private expenseService: ExpensesService) { }
-  fileToUpload: File = null;
-  expenseData: any = null;
+  fileToUpload: FileList;
+  expenseData: any[] = [];
+  errorMessage: string = "";
 
   ngOnInit(): void {
   }
 
   handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+    this.processing =  true;
+    this.fileToUpload = files;
 
     this.expenseService.postInvoiceFile(this.fileToUpload)
     .then(data => {
       debugger;
-      this.expenseData = {};
+      if (data.errorMessages != undefined && data.errorMessages.length > 0 )
+      {
+        this.errorMessage = "Ha ocurrido un error en el sistema: " + data.errorMessages[0];
+        return;
+
+      }
+
+      this.expenseData = [];
       this.expenseData = data;
+      this.processing = false;
 
     })
     .catch(error => console.log('error', error));;

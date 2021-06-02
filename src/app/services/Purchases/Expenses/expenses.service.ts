@@ -23,7 +23,7 @@ export class ExpensesService {
     return headers;
   }
 
-  postInvoiceFile(file: File)
+  postInvoiceFile(file: FileList)
   {
      const headers = this.initHeaders();
     // debugger;
@@ -37,7 +37,14 @@ export class ExpensesService {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + this.authService.getUserData().token);
      var formdata = new FormData();
-    formdata.append("file", file, "2021052000314891001095509POSA.xml");
+
+    for (let index = 0; index < file.length; index++) {
+      var singleFile = file[index];
+      formdata.append("files[]", singleFile);
+      
+    }
+
+    // formdata.append("file[]", file);
 
     
     var requestOptions = {
@@ -50,6 +57,17 @@ export class ExpensesService {
       .then(response => response.json())
       
     
+  }
+
+
+  getExpenses(page, itemsPerPage){
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${this.authService.getUserData().token}`
+    // })
+    const headers = this.initHeaders();
+
+    return this.http.get(ServerEnvironment.baseURL + `expense?currentPage=${page}&pageSize=${itemsPerPage}`, {headers: headers});
   }
 
 }

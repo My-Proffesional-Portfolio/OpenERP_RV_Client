@@ -17,6 +17,7 @@ import { ClientModalContentComponent } from './components/client-modal-content/c
 import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.component';
 import { ProductsComponent } from './pages/sales/products/products.component';
 import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
+import { ExpenseListComponent } from './pages/purchases/Expenses/expense-list/expense-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
     ClientsComponent, 
     RegisterComponent, 
     ClientModalContentComponent, 
-    LoadComponent
+    LoadComponent, 
+    ExpenseListComponent
   ],
   imports: [
     BrowserModule,

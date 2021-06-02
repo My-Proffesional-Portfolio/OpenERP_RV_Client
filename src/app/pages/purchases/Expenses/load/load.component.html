@@ -1,16 +1,66 @@
 <div style="text-align: center;">
-    <h3>Ingreso de gastos</h3>
-    <input type="file" id="file" (change)="handleFileInput($event.target.files)" multiple>
+    <h2>Ingreso de Factura CFDI</h2>
+    <h5>Gastos</h5>
+    <input *ngIf="expenseData.length === 0 || !processing" type="file" id="file" (change)="handleFileInput($event.target.files)" multiple>
 </div>
+<div *ngIf="processing" class="d-flex justify-content-center">
+  <div  class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+ </div>
 <!-- <button class="btn btn-primary" (click)="saveFile()">Procesar</button> -->
+<br>
 
-
-<div *ngIf="expenseData" class="card bg-light">
-    <div class="card-body" style="text-align: center;">
-        <div style="font-family:'Courier New', Courier, monospace">
-            <h6>Gasto guardado con éxito</h6>
-            <h3>Proveedor: {{expenseData.supplierName}}</h3>
-            <h5>RFC: {{expenseData.supplierTaxID}}</h5>
-        </div>
-    </div>
+<div *ngIf="errorMessage">
+    <h4>{{errorMessage}}</h4>
 </div>
+
+<div  *ngFor="let ed of expenseData; index as i;">
+  <div *ngIf="ed && !errorMessage" class="card bg-light">
+      <div class="card-body" style="text-align: center;">
+          <div style="font-family:'Courier New', Courier, monospace">
+              <h6>Gasto guardado con éxito</h6>
+              <h3>Proveedor: {{ed.supplierName}}</h3>
+              <h5>RFC: {{ed.supplierTaxID}}</h5>
+              <h5>Fecha: {{ed.expenseDate}}</h5>
+
+              <div class="container">
+              <div class="table-responsive">
+                  <table class="table table-borderless">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Cantidad</th>
+                          <th scope="col">Descripción</th>
+                          <th scope="col">Subtotal</th>
+                          <th scope="col">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let ei of ed.expenseItems; index as i;">
+                          <td>{{i+1}}</td>
+                          <td>{{ei.quantity}}</td>
+                          <td>{{ei.description}}</td>
+                          <td>{{ei.subtotal | currency}}</td>
+                          <td>{{ei.total | currency}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div style="text-align:right;">
+                  <p style="font-size: medium;">----------------------------------------------------</p>
+                  <p style="font-size: medium;">Moneda: {{ed.currencyCode}}</p>
+                  <p style="font-size: medium;">Subtotal: {{ed.subtotal | currency}}</p>
+                  <p style="font-size: medium;">Impuestos: {{ed.taxes | currency}}</p>
+                  <p style="font-size: medium;">Total: {{ed.total | currency}}</p>
+              </div>
+          </div>
+          
+          <!-- </div> -->
+      </div>
+
+    </div>
+    <br>
+  </div>
+

@@ -8,6 +8,7 @@ import { AuthenticationService } from './services/Accounts/Authentication/authen
 import { SalesIndexComponent } from './pages/sales/sales-index/sales-index.component';
 import { ProductsComponent } from './pages/sales/products/products.component';
 import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
+import { ExpenseListComponent } from './pages/purchases/Expenses/expense-list/expense-list.component';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent {
       { path: 'clients', component: ClientsComponent, canActivate: [AuthGuard] },
       { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] },
       { path: 'profile', component: MyOfficeComponent, canActivate: [AuthGuard] },
+      { path: 'expenses', component: ExpenseListComponent, canActivate: [AuthGuard] },
       { path: 'upload', component: LoadComponent, canActivate: [AuthGuard] }),
       
   
