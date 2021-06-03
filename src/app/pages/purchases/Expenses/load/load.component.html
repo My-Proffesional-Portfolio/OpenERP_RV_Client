@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div *ngIf="expenseData.length === 0" style="text-align: center;">
     <h2>Ingreso de Factura CFDI</h2>
     <h5>Gastos</h5>
     <input *ngIf="expenseData.length === 0 || !processing" type="file" id="file" (change)="handleFileInput($event.target.files)" multiple>
@@ -15,8 +15,16 @@
     <h5>{{errorMessage}}</h5>
 </div>
 
+<div *ngIf="canDownload" class="row">
+  <div class="col text-center">
+      <div>
+        <button type="button" class="btn btn-primary" (click)="downloadCFDI()">Descargar XML</button>
+      </div>
+  </div>
+</div>
+<br>
 <div  *ngFor="let ed of expenseData; index as i;">
-  <div *ngIf="ed && !errorMessage" class="card bg-light">
+  <div *ngIf="ed && !errorMessage && !ed.info" class="card bg-light">
       <div class="card-body" style="text-align: center;">
           <div style="font-family:'Courier New', Courier, monospace">
               <h6>Gasto guardado con éxito</h6>
@@ -26,7 +34,7 @@
 
               <div class="container">
               <div class="table-responsive">
-                  <table class="table table-borderless">
+                  <table  class="table table-borderless">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -34,6 +42,7 @@
                           <th scope="col">Descripción</th>
                           <th scope="col">Subtotal</th>
                           <th scope="col">Total</th>
+                        
                         </tr>
                       </thead>
                       <tbody>
@@ -43,10 +52,12 @@
                           <td>{{ei.description}}</td>
                           <td>{{ei.subtotal | currency}}</td>
                           <td>{{ei.total | currency}}</td>
+                         
                         </tr>
                       </tbody>
                     </table>
                   </div>
+                
               </div>
               <div style="text-align:right;">
                   <p style="font-size: medium;">----------------------------------------------------</p>
@@ -56,11 +67,12 @@
                   <p style="font-size: medium;">Total: {{ed.total | currency}}</p>
               </div>
           </div>
-          
-          <!-- </div> -->
       </div>
 
     </div>
+      <div *ngIf="ed.info" class="alert alert-danger" role="alert">
+        {{ed.info}}
+      </div>
     <br>
   </div>
 

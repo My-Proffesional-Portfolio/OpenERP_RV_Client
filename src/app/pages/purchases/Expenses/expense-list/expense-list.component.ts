@@ -19,6 +19,13 @@ export class ExpenseListComponent implements OnInit {
   totalPages: number;
 
   public isCollapsed = true;
+  searchTerm : string = "";
+  emissionStartDate: Date = null;
+  emissionEndDate: Date = null;
+  creationStartDate: Date = null;
+  creationEndDate: Date = null;
+
+
 
   constructor(private expenseService: ExpensesService, 
     private router : Router, 
@@ -30,7 +37,7 @@ export class ExpenseListComponent implements OnInit {
     processing: boolean;
     expensesData: any;
     closeResult = '';
-    selectedClient: any;
+    selectedExpenses: any;
     newClients: any[] = [];
     itemsPerPageOptionValue: Array<PaginationModel.IItemsPerPage>;
     selectedItemPerPageOption: PaginationModel.IItemsPerPage;
@@ -38,11 +45,32 @@ export class ExpenseListComponent implements OnInit {
     totalItems: number;
 
   ngOnInit(): void {
+    debugger;
+    var currentDate = new Date();
+
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = currentDate.getMonth();
+    var currentDay = currentDate.getDay();
+    
+    this.emissionStartDate = new Date(currentYear, currentMonth, 1);
+    this.emissionEndDate = new Date(currentYear, currentMonth, currentDay);
+
     this.itemsPerPageOptionValue = this.pagerService.getItemPerPageOptions();
     this.selectedItemPerPageOption = this.itemsPerPageOptionValue[0];
     this.getExpenses();
   }
 
+  openInfo(content, index) {
+
+    this.selectedExpenses = this.expensesData.items[index];
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      alert("Call client delete service ");
+
+    }, (reason) => {
+    });
+  }
 
   manageItemsPerPage(event)
   {
@@ -80,7 +108,7 @@ export class ExpenseListComponent implements OnInit {
   }
 
   getExpenses() {
-    this.expenseService.getExpenses(this.currentPage, this.itemsPerPage).
+    this.expenseService.getExpenses(this.currentPage, this.itemsPerPage, this.searchTerm).
     subscribe((data: any)=> {
       debugger;
       this.expensesData = data;
@@ -99,6 +127,13 @@ export class ExpenseListComponent implements OnInit {
       });
   }
 
+
+  downloadCFDI() {
+
+    this.expenseService.downloadExpenseCFDI(this.expensesData[0]);
+
+  }
+
   openBatchLoad(content) {
 
 
@@ -110,10 +145,15 @@ export class ExpenseListComponent implements OnInit {
 
    resetSearch()
    {
-    this.modal.close();
+    
     this.currentPage = 0;
     this.getExpenses();
 
+   }
+
+   refreshAfterLoad(){
+    this.modal.close();
+    this.resetSearch();
    }
 
 }

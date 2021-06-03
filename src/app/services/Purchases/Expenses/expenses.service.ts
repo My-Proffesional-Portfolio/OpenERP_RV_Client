@@ -60,14 +60,42 @@ export class ExpensesService {
   }
 
 
-  getExpenses(page, itemsPerPage){
+  getExpenses(page, itemsPerPage, searchTerm){
     // const headers = new HttpHeaders({
     //   'Content-Type': 'application/json',
     //   'Authorization': `Bearer ${this.authService.getUserData().token}`
     // })
     const headers = this.initHeaders();
 
-    return this.http.get(ServerEnvironment.baseURL + `expense?currentPage=${page}&pageSize=${itemsPerPage}`, {headers: headers});
+    return this.http.get(ServerEnvironment.baseURL + `expense?currentPage=${page}&pageSize=${itemsPerPage}&searchTerm=${searchTerm}`, {headers: headers});
   }
+
+  getExpenseDetail(id){
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${this.authService.getUserData().token}`
+    // })
+    const headers = this.initHeaders();
+
+    return this.http.get(ServerEnvironment.baseURL + `expense/detail?id=${id}`, {headers: headers});
+  }
+
+  downloadExpenseCFDI(expense: any) {
+    debugger;
+    var fileDateForName = new Date(expense.expenseDate);
+    var fileName = expense.supplierTaxID + " " + fileDateForName.getDay() + "-" + fileDateForName.getMonth() + "-" + fileDateForName.getFullYear() + ".xml";
+    var element = document.createElement('a');
+    var text = expense.xml;
+    element.setAttribute('href', 'data:text/plain;charset=unicode,' + encodeURIComponent(text));
+    element.setAttribute('download', fileName);
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
+
 
 }
