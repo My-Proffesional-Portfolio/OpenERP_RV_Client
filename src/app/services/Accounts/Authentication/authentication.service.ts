@@ -9,11 +9,12 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  login (userName: string, password)
+  login (userName: string, password: string, specialTokenRequest: boolean = false)
   {
     var body = {
       UserName: userName,
-      Password: password
+      Password: password,
+      SpecialRequestToken: specialTokenRequest,
     }
     return this.http.post(ServerEnvironment.baseURL + "Account/login", body);
   }

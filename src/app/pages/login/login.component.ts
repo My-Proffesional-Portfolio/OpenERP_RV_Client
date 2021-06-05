@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       }
       else{
         //this.authorizationService.currentUser = data;
+        data.userName = this.userName;
         localStorage.setItem("userData", JSON.stringify(data));
         
         this.router.navigate(['/']);

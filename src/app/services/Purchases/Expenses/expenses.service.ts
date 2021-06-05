@@ -80,6 +80,26 @@ export class ExpensesService {
     return this.http.get(ServerEnvironment.baseURL + `expense/detail?id=${id}`, {headers: headers});
   }
 
+  deleteExpense(id){
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${this.authService.getUserData().token}`
+    // })
+    const headers = this.initHeaders();
+
+    return this.http.delete(ServerEnvironment.baseURL + `expense?id=${id}`, {headers: headers});
+  }
+
+  deleteAllExpenses(specialToken){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${specialToken}`
+    })
+
+    return this.http.delete(ServerEnvironment.baseURL + `expense/deleteAll`, {headers: headers});
+  }
+
+
   downloadExpenseCFDI(expense: any) {
     debugger;
     var fileDateForName = new Date(expense.expenseDate);

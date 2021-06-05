@@ -14,6 +14,7 @@ import { PagerService } from 'src/app/services/Utils/pager.service';
 })
 export class ExpenseListComponent implements OnInit {
   modal : NgbModalRef;
+  modalDelete: NgbModalRef;
   itemsPerPage: number = 10;
   currentPage: number = 0;
   totalPages: number;
@@ -24,6 +25,7 @@ export class ExpenseListComponent implements OnInit {
   emissionEndDate: Date = null;
   creationStartDate: Date = null;
   creationEndDate: Date = null;
+  modalDeleteAll: NgbModalRef;
 
 
 
@@ -32,7 +34,8 @@ export class ExpenseListComponent implements OnInit {
     private authService: AuthenticationService,
     private modalService: NgbModal,
     private fileService : FilesService,
-    private pagerService : PagerService) { }
+    private pagerService : PagerService,
+    private loginService: AuthenticationService) { }
   
     processing: boolean;
     expensesData: any;
@@ -43,6 +46,7 @@ export class ExpenseListComponent implements OnInit {
     selectedItemPerPageOption: PaginationModel.IItemsPerPage;
     viewPageLinks: number[];
     totalItems: number;
+    passwordToDelete: string;
 
   ngOnInit(): void {
     debugger;
@@ -70,6 +74,109 @@ export class ExpenseListComponent implements OnInit {
 
     }, (reason) => {
     });
+  }
+
+
+  openDelete(content, index) {
+
+    this.selectedExpenses = this.expensesData.items[index];
+
+    this.modalDelete =  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalDelete.result.then((e) => {
+       console.log("dialogo cerrado")
+   });
+
+  }
+
+
+  openDeleteAll(content, index) {
+
+    this.modalDeleteAll =  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalDeleteAll.result.then((e) => {
+       console.log("dialogo cerrado")
+   });
+
+  }
+
+
+  confimDeleteExpenses()
+  {
+
+    this.expenseService.deleteExpense(this.selectedExpenses.id).
+    subscribe((data: any)=> {
+      debugger;
+      if (data.errorMessages.length == 0)
+      {
+        this.modalDelete.close();
+        this.resetSearch();
+      }
+
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401)
+        {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
+      });
+  }
+
+  confimDeleteAll()
+  {
+
+    debugger;
+    var userData = localStorage.getItem("userData");
+    var user = JSON.parse(userData)
+    this.loginService.login(user.userName, this.passwordToDelete, true).
+    subscribe((data: any)=> {
+      debugger;
+      if (data.errorMessages.length == 0)
+      {
+        this.expenseService.deleteAllExpenses(data.token).
+        subscribe((data: any)=> {
+          debugger;
+          if (data.errorMessages.length == 0)
+          {
+          }
+        },(errorEvent) => {
+            debugger;
+            var e = errorEvent;
+            if (errorEvent.status == 401)
+            {
+              this.authService.logout();
+              this.router.navigate(['/login']);
+            }
+          });
+      }
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401)
+        {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
+      });
+
+    // this.expenseService.deleteExpense(this.selectedExpenses.id).
+    // subscribe((data: any)=> {
+    //   debugger;
+    //   if (data.errorMessages.length == 0)
+    //   {
+    //     this.modalDelete.close();
+    //     this.resetSearch();
+    //   }
+
+    // },(errorEvent) => {
+    //     debugger;
+    //     var e = errorEvent;
+    //     if (errorEvent.status == 401)
+    //     {
+    //       this.authService.logout();
+    //       this.router.navigate(['/login']);
+    //     }
+    //   });
   }
 
   manageItemsPerPage(event)
