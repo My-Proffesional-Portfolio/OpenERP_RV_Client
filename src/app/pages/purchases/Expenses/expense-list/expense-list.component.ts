@@ -89,7 +89,7 @@ export class ExpenseListComponent implements OnInit {
   }
 
 
-  openDeleteAll(content, index) {
+  openDeleteAll(content) {
 
     this.modalDeleteAll =  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
     this.modalDeleteAll.result.then((e) => {
@@ -159,24 +159,6 @@ export class ExpenseListComponent implements OnInit {
         }
       });
 
-    // this.expenseService.deleteExpense(this.selectedExpenses.id).
-    // subscribe((data: any)=> {
-    //   debugger;
-    //   if (data.errorMessages.length == 0)
-    //   {
-    //     this.modalDelete.close();
-    //     this.resetSearch();
-    //   }
-
-    // },(errorEvent) => {
-    //     debugger;
-    //     var e = errorEvent;
-    //     if (errorEvent.status == 401)
-    //     {
-    //       this.authService.logout();
-    //       this.router.navigate(['/login']);
-    //     }
-    //   });
   }
 
   manageItemsPerPage(event)
@@ -215,7 +197,8 @@ export class ExpenseListComponent implements OnInit {
   }
 
   getExpenses() {
-    this.expenseService.getExpenses(this.currentPage, this.itemsPerPage, this.searchTerm).
+    debugger;
+    this.expenseService.getExpenses(this.currentPage, this.itemsPerPage, this.searchTerm, this.emissionStartDate, this.emissionEndDate).
     subscribe((data: any)=> {
       debugger;
       this.expensesData = data;

@@ -42,7 +42,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Fin</span>
           </div>
-          <input type="date" class="form-control" [ngModel]="emissionEndDate| date:'yyyy-MM-dd'"  (ngModelChange)="emissionStartDate = $event" name="emissionEndDate"  aria-describedby="basic-addon1">
+          <input type="date" class="form-control" [ngModel]="emissionEndDate| date:'yyyy-MM-dd'"  (ngModelChange)="emissionEndDate = $event">
         </div>
        
         <label>Fecha de Carga</label>

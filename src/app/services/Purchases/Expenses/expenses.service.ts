@@ -60,14 +60,33 @@ export class ExpensesService {
   }
 
 
-  getExpenses(page, itemsPerPage, searchTerm){
+  getExpenses(page, itemsPerPage, searchTerm, eStartDate, eEndDate){
     // const headers = new HttpHeaders({
     //   'Content-Type': 'application/json',
     //   'Authorization': `Bearer ${this.authService.getUserData().token}`
     // })
     const headers = this.initHeaders();
+    debugger;
+    
+    try {
+    var sStart = eStartDate.toISOString().substring(0, 10);
+    }
+    catch(e)
+    {
+      var sStart =eStartDate;
+    }
+    
+    try {
+      var sEnd = eEndDate.toISOString().substring(0, 10);
+      }
+      catch(e)
+      {
+        var sEnd = eEndDate;
+      }
+      
 
-    return this.http.get(ServerEnvironment.baseURL + `expense?currentPage=${page}&pageSize=${itemsPerPage}&searchTerm=${searchTerm}`, {headers: headers});
+    return this.http.get(ServerEnvironment.baseURL 
+      + `expense?currentPage=${page}&pageSize=${itemsPerPage}&searchTerm=${searchTerm}&emissionStartDate=${sStart}&emissionEndDate=${sEnd}`, {headers: headers});
   }
 
   getExpenseDetail(id){

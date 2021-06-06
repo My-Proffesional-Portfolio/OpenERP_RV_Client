@@ -1,45 +1,123 @@
-
-<!-- <div class="container">
-  <app-login></app-login>
-</div> -->
-
+<style>
+  body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(76, 126, 201);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: rgb(153, 210, 212);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #007bff;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }
+  </style>
 <body>
   <div>
-    <header *ngIf="authService.getUserData() && authService.getUserData().token">
-      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
-        <div class="container">
+
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a *ngFor="let link of links" class="nav-item" [routerLink]="link.path" [routerLinkActive]="['link-active']" >{{link.text}}</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
     
-          <button class="navbar-toggler"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target=".navbar-collapse"
-                  aria-label="Toggle navigation"
-                  [attr.aria-expanded]="isExpanded"
-                  (click)="toggle()">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" [routerLink]="['/']">Open ERP</a>
-    
-          <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-               [ngClass]="{ show: isExpanded }">
-            <ul class="navbar-nav flex-grow">
+    <div id="main">
+      <header *ngIf="authService.getUserData() && authService.getUserData().token">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+          <div class="container">
+      
+            <!-- <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target=".navbar-collapse"
+                    aria-label="Toggle navigation"
+                    [attr.aria-expanded]="isExpanded"
+                    (click)="toggle()">
+              <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <button class="openbtn" onclick="openNav()" style="margin-right: 10px;">☰ </button>  
+            
+            <a class="navbar-brand" [routerLink]="['/']"> <i class="fa fa-user"></i> {{authService.getUserData().userName}}</a>
+      
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+                 [ngClass]="{ show: isExpanded }">
+              <ul class="navbar-nav flex-grow">
+               
              
-           
-              <li *ngFor="let link of links" class="nav-item" [routerLinkActive]="['link-active']">
-                <a class="nav-link" style="color:white" [routerLink]="link.path">{{link.text}}</a>
-              </li>
-              <li>
-                <a class="nav-link" (click)="loguot()" >Salir</a>
-              </li>
-              
-            </ul>
+                <!-- <li *ngFor="let link of links" class="nav-item" [routerLinkActive]="['link-active']">
+                  <a class="nav-link" style="color:white" [routerLink]="link.path">{{link.text}}</a>
+                </li>
+                <li>
+                  <a class="nav-link" (click)="loguot()" >Salir</a>
+                </li> -->
+                
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
+      
+      
+      <div class="container">
+        
+        <router-outlet></router-outlet>
+      </div>
+    </div>
     
-  <div class="container">
-       <router-outlet></router-outlet>
+ 
+ 
   </div>
-  </div>
+
+ 
 </body>

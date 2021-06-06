@@ -43,7 +43,7 @@ export class AppComponent {
       { text: "Principal", path: "" },
       { text: "Compras", path: "purchases" },
       { text: "Ventas", path: "sales" },
-      { text: "Perfil de empresa", path: "profile" },
+      { text: "Perfil", path: "profile" },
       )
       
   }
