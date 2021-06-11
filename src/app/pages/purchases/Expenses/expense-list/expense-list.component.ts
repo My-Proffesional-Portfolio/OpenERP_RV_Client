@@ -26,6 +26,8 @@ export class ExpenseListComponent implements OnInit {
   creationStartDate: Date = null;
   creationEndDate: Date = null;
   modalDeleteAll: NgbModalRef;
+  deleteAllProcessing : boolean = false;
+  deleteAllErrorMSG: string;
 
 
 
@@ -57,7 +59,7 @@ export class ExpenseListComponent implements OnInit {
     var currentDay = currentDate.getDay();
     
     this.emissionStartDate = new Date(currentYear, currentMonth, 1);
-    this.emissionEndDate = new Date(currentYear, currentMonth, currentDay);
+    this.emissionEndDate = new Date();
 
     this.itemsPerPageOptionValue = this.pagerService.getItemPerPageOptions();
     this.selectedItemPerPageOption = this.itemsPerPageOptionValue[0];
@@ -128,30 +130,24 @@ export class ExpenseListComponent implements OnInit {
     debugger;
     var userData = localStorage.getItem("userData");
     var user = JSON.parse(userData)
+    this.deleteAllProcessing = true;
     this.loginService.login(user.userName, this.passwordToDelete, true).
     subscribe((data: any)=> {
       debugger;
+     
       if (data.errorMessages.length == 0)
       {
-        this.expenseService.deleteAllExpenses(data.token).
-        subscribe((data: any)=> {
-          debugger;
-          if (data.errorMessages.length == 0)
-          {
-          }
-        },(errorEvent) => {
-            debugger;
-            var e = errorEvent;
-            if (errorEvent.status == 401)
-            {
-              this.authService.logout();
-              this.router.navigate(['/login']);
-            }
-          });
+        this.CallDeleteAllExpenseService(data);
+      }
+      else{
+        this.deleteAllProcessing = false;
+        this.deleteAllErrorMSG = data.errorMessages[0];
+
       }
     },(errorEvent) => {
         debugger;
         var e = errorEvent;
+        this.deleteAllProcessing = false;
         if (errorEvent.status == 401)
         {
           this.authService.logout();
@@ -159,6 +155,30 @@ export class ExpenseListComponent implements OnInit {
         }
       });
 
+  }
+
+  private CallDeleteAllExpenseService(data: any) {
+    this.expenseService.deleteAllExpenses(data.token).
+      subscribe((data: any) => {
+        debugger;
+        if (data.errorMessages.length == 0) {
+          this.deleteAllProcessing = false;
+          this.modalDeleteAll.close();
+        }
+        else
+        {
+          this.deleteAllProcessing = false;
+          this.deleteAllErrorMSG = data.errorMessages[0];
+        }
+      }, (errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401) {
+          this.deleteAllProcessing = false;
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
+      });
   }
 
   manageItemsPerPage(event)

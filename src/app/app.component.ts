@@ -46,6 +46,9 @@ export class AppComponent {
       { text: "Perfil", path: "profile" },
       )
       
+      debugger;
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
   }
 
   collapse() {

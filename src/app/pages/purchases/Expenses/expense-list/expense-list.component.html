@@ -194,7 +194,8 @@
         <div class="row">
           <div class="col-sm-12 mx-auto">
               <form>
-                <p style="font-size: small; font-weight: bold;">¿Estás seguro que quieres elimminar todos los gastos?, introduce tu contraseña y presiona borrar</p>
+                <p style="font-size: small; font-weight: bold;">¿Estás seguro que quieres elimminar todos los gastos? LOS DATOS NO PODRÁN SER RECUPERADOS,
+                  al introducir tu contraseña aceptas que no podrás recuperar esta información</p>
                
               </form>
           </div>
@@ -213,7 +214,12 @@
          </div>
          <div class="col text-center">
           <div>
-            <button type="button" class="btn btn-danger" (click)="confimDeleteAll()">Borrar</button>
+            <div *ngIf="deleteAllProcessing" class="d-flex justify-content-center">
+              <div  class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+             </div>
+            <button *ngIf="!deleteAllProcessing" type="button" class="btn btn-danger" (click)="confimDeleteAll()">Borrar</button>
           </div>
       </div>
       </div>

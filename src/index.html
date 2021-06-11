@@ -14,24 +14,26 @@
 </body>
 
 <script>
-  var isOpen = false;
-  function openNav() {
-    debugger;
+  var isOpen = true;
+
+  function manageNav() {
     isOpen = !isOpen
     if (isOpen){
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
     }
     else 
     {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
+        closeNav();
     }
   }
   
   function closeNav() {
+    isOpen = false;
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
   }
+
+  
   </script>
 </html>
