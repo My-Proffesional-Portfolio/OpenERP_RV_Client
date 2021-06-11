@@ -78,6 +78,7 @@
       <h3 style="color: antiquewhite;">Open ERP</h3>
       </div>
       <a *ngFor="let link of links" class="nav-item" [routerLink]="link.path" [routerLinkActive]="['link-active']" >{{link.text}}</a>
+      <a (click)="loguot()">Salir</a>
     </div>
     
     <div id="main">

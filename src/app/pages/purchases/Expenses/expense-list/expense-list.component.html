@@ -8,10 +8,6 @@
     <div class="col-sm-6">
       <button class="btn btn-primary pull-right" (click)="openBatchLoad(contentUploadCFDI)" style="margin-left: 10px;">Cargar CFDI</button>
       <button class="btn btn-danger pull-right" (click)="openDeleteAll(contentDeleteAll)" style="margin-left: 10px;">Borrar todo</button>
-      <!-- <button *ngIf="!downloadProcessing" class="btn btn-success pull-right" (click)="getClientsForDownload()">Descargar</button>
-      <div *ngIf="downloadProcessing"  class="spinner-border text-primary pull-right" role="status">
-        <span class="sr-only">Loading...</span>
-      </div> -->
     </div>
   </div>
   
@@ -37,7 +33,6 @@
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Inicio</span>
           </div>
-          <!-- <input type="date" class="form-control" [(ngModel)]="emissionStartDate" name="emissionStartDate"  aria-describedby="basic-addon1"> -->
           <input type="date" class="form-control" [ngModel] ="emissionStartDate | date:'yyyy-MM-dd'" (ngModelChange)="emissionStartDate = $event">
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Fin</span>
@@ -45,7 +40,7 @@
           <input type="date" class="form-control" [ngModel]="emissionEndDate| date:'yyyy-MM-dd'"  (ngModelChange)="emissionEndDate = $event">
         </div>
        
-        <label>Fecha de Carga</label>
+        <!-- <label>Fecha de Carga</label>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Inicio</span>
@@ -55,7 +50,7 @@
             <span class="input-group-text" id="basic-addon1">Fin</span>
           </div>
           <input type="date" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
+        </div> -->
 
 
         <div class="row">
@@ -194,7 +189,7 @@
         <div class="row">
           <div class="col-sm-12 mx-auto">
               <form>
-                <p style="font-size: small; font-weight: bold;">¿Estás seguro que quieres elimminar todos los gastos? LOS DATOS NO PODRÁN SER RECUPERADOS,
+                <p style="font-size: small; font-weight: bold;">¿Estás seguro que quieres elimminar todos los gastos? <strong>LOS DATOS NO PODRÁN SER RECUPERADOS</strong>,
                   al introducir tu contraseña aceptas que no podrás recuperar esta información</p>
                
               </form>

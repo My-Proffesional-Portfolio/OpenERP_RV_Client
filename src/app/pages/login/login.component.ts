@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectLanguage("ES");
+    document.getElementById("mySidebar").style.width = "0px";
+    document.getElementById("main").style.marginLeft = "0px";
   }
 
   login ()
@@ -40,6 +42,8 @@ export class LoginComponent implements OnInit {
         //this.authorizationService.currentUser = data;
         data.userName = this.userName;
         localStorage.setItem("userData", JSON.stringify(data));
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
         
         this.router.navigate(['/']);
       }
