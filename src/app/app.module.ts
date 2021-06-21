@@ -19,6 +19,7 @@ import { ProductsComponent } from './pages/sales/products/products.component';
 import { LoadComponent } from './pages/purchases/Expenses/load/load.component';
 import { ExpenseListComponent } from './pages/purchases/Expenses/expense-list/expense-list.component';
 import { PurchasesIndexComponent } from './pages/purchases/purchases-index/purchases-index.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PurchasesIndexComponent } from './pages/purchases/purchases-index/purch
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    GoogleChartsModule
   ],
   providers: [AuthenticationService, AuthGuard],
   bootstrap: [AppComponent]

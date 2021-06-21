@@ -89,6 +89,36 @@ export class ExpensesService {
       + `expense?currentPage=${page}&pageSize=${itemsPerPage}&searchTerm=${searchTerm}&emissionStartDate=${sStart}&emissionEndDate=${sEnd}`, {headers: headers});
   }
 
+
+  getExpenseReportGraph(eStartDate, eEndDate){
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${this.authService.getUserData().token}`
+    // })
+    const headers = this.initHeaders();
+    debugger;
+    
+    try {
+    var sStart = eStartDate.toISOString().substring(0, 10);
+    }
+    catch(e)
+    {
+      var sStart =eStartDate;
+    }
+    
+    try {
+      var sEnd = eEndDate.toISOString().substring(0, 10);
+      }
+      catch(e)
+      {
+        var sEnd = eEndDate;
+      }
+      
+
+    return this.http.get(ServerEnvironment.baseURL 
+      + `expense/report?&emissionStartDate=${sStart}&emissionEndDate=${sEnd}`, {headers: headers});
+  }
+
   getExpenseDetail(id){
     // const headers = new HttpHeaders({
     //   'Content-Type': 'application/json',

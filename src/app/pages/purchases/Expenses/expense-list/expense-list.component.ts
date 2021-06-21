@@ -13,6 +13,28 @@ import { PagerService } from 'src/app/services/Utils/pager.service';
   styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent implements OnInit {
+
+ columnNames = ['Proveedor', 'Dinero'];
+ options = {
+  // colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+  is3D: true,
+  width: 500,
+  height: 350,
+  hAxis: { format: 'currency' },
+  titleTextStyle: {
+    fontSize: 18, // 12, 18 whatever you want (don't specify px)
+  }
+};
+
+
+  titlePie : string = "Compras por proveedor";
+  typePie : string  = 'PieChart';
+  dataPie : any;
+
+  titleBar : string = "Montos x proveedor";
+  typeBar : string  = 'ColumnChart';
+  dataBar : any;
+
   modal : NgbModalRef;
   modalDelete: NgbModalRef;
   itemsPerPage: number = 10;
@@ -224,7 +246,8 @@ export class ExpenseListComponent implements OnInit {
       this.expensesData = data;
       this.totalPages = data.totalPages;
       this.totalItems = data.totalItems;
-      this.viewPageLinks = this.pagerService.setPageLinks(this.currentPage, this.totalPages)
+      this.viewPageLinks = this.pagerService.setPageLinks(this.currentPage, this.totalPages);
+      this.getProvidersExpenseGraphData();
 
     },(errorEvent) => {
         debugger;
@@ -237,6 +260,32 @@ export class ExpenseListComponent implements OnInit {
       });
   }
 
+
+  getProvidersExpenseGraphData()
+  {
+
+    this.expenseService.getExpenseReportGraph(this.emissionStartDate, this.emissionEndDate).subscribe((data: any) =>{
+      debugger;
+      this.dataPie = data;
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401)
+        {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
+      });
+
+    // this.data  = [
+    //       ['Firefox', 4],
+    //       ['IE', 2],
+    //       ['Chrome', 12],
+    //       ['Safari', 8],
+    //       ['Opera', 6],
+    //       ['Others', 10] 
+    //    ];
+  }
 
   downloadCFDI() {
 
