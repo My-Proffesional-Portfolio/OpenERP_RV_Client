@@ -166,5 +166,12 @@ export class ExpensesService {
     document.body.removeChild(element);
   }
 
+  getCompanyProviders(){
+    const headers = this.initHeaders();
+    return this.http.get(ServerEnvironment.baseURL 
+      + `supplier`, {headers: headers});
+
+  }
+
 
 }

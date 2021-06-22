@@ -1,8 +1,29 @@
-<div *ngIf="expenseData.length === 0" style="text-align: center;">
-    <h2>Ingreso de Factura CFDI</h2>
-    <h5>Gastos</h5>
+
+<div style="text-align: center;">
+
+  <h2>Ingreso de Factura CFDI</h2>
+  <h5>Gastos</h5>
+</div>
+<div *ngIf="xmlMode" class="row">
+  <div class="col text-center">
+      <div>
+        <button type="button" class="btn btn-primary" (click)="changeMode()">Cargar nota o remision</button>
+      </div>
+  </div>
+</div>
+<div *ngIf="ticketMode" class="row">
+  <div class="col text-center">
+      <div>
+        <button type="button" class="btn btn-primary" (click)="changeMode()">Cargar CFDI</button>
+      </div>
+  </div>
+</div>
+<br>
+<div *ngIf="expenseData.length === 0 && xmlMode" style="text-align: center;">
+    
     <input *ngIf="expenseData.length === 0 || !processing" type="file" id="file" (change)="handleFileInput($event.target.files)" multiple>
 </div>
+
 <div *ngIf="processing" class="d-flex justify-content-center">
   <div  class="spinner-border text-primary" role="status">
     <span class="sr-only">Loading...</span>
@@ -22,8 +43,131 @@
       </div>
   </div>
 </div>
+
+<div *ngIf="ticketMode" class="row">
+ <div class="col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Proveedor</span>
+        </div>
+    
+      <select *ngIf="providerExistMode" class="form-control" [(ngModel)]="selectedProvider">
+          <option *ngFor="let x of providersList" [ngValue]="x" >{{x.companyName}} - {{x.rfc}}</option>
+      </select>
+      <input *ngIf="newProviderMode"  type="text" class="form-control" placeholder="Nombre">
+      <input *ngIf="newProviderMode" type="text" class="form-control" placeholder="RFC">
+      <input *ngIf="newProviderMode" type="text" class="form-control" placeholder="Dirección">
+      <input *ngIf="newProviderMode" type="text" class="form-control" placeholder="Email">
+      <button *ngIf="providerExistMode" class="btn btn-warning" (click)="providerMode()">Agregar nuevo</button>
+      <button *ngIf="newProviderMode" class="btn btn-warning" (click)="providerMode()">Seleccionar existente</button>  
+    </div>
+      <label>Fecha de Compra</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Inicio</span>
+        </div>
+        <input type="date" class="form-control" [ngModel] ="emissionStartDate | date:'yyyy-MM-dd'" (ngModelChange)="emissionStartDate = $event">
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+         <div class="card">
+           <div class="card-body">
+             <div class="input-group mb-3">
+                 <span><strong>Productos o servicios</strong></span>
+            
+             </div>
+             <div class="row">
+               <div class="col-sm-5">
+                 <label>Producto</label>
+                 <input [(ngModel)]="newExpenseItem.productName" type="texr" class="form-control" placeholder="Producto">
+                 <br>
+               </div>
+               <div class="col-sm-1">
+                <label>Cantidad</label>
+                <input (ngModelChange)="updateQuantity($event)"  [(ngModel)]="newExpenseItem.quantity" type="text" class="form-control" placeholder="Cant.">
+                <br>
+              </div>
+              <div class="col-sm-2">
+                <label>Precio</label>
+                <input (ngModelChange)="updatePrice($event)"  [(ngModel)]="newExpenseItem.price" type="text" class="form-control" placeholder="Precio">
+                <br>
+              </div>
+              <div class="col-sm-1">
+                <label>IVA</label>
+                <input [(ngModel)]="newExpenseItem.tax" type="text" class="form-control" placeholder="IVA">
+                <br>
+              </div>
+              <div class="col-sm-2">
+                <label>Total</label>
+                <input  [(ngModel)]="newExpenseItem.total" type="text" class="form-control" placeholder="Total">
+                <br>
+              </div>
+              <div class="col-sm-1">
+                <label>Agregar</label>
+                <button (click)="addNewItem()" class="btn btn-success">+</button>
+                <br>
+              </div>
+              <br>
+              <div class="table-responsive"> 
+                <table class="table table-hover">
+                    <thead style="background-color: #007bff; color:white; font-size: small;">
+                      <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>IVA</th>
+                        <th>Subtotal</th>
+                        <th>Total</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="font-size: small;" *ngFor="let e of newExpense.items; index as i;">
+                        <td>{{e.productName}}</td>
+                        <td>{{e.quantity}}</td>
+                        <td>{{e.price | currency}}</td>
+                        <td>{{e.tax | currency}}</td>
+                        <td>{{(e.price * e.quantity) | currency}}</td>
+                        <td>{{e.total}}</td>
+                        <td><i class="fa fa-trash" (click)="deleteNewItemByIndex(i)"  aria-hidden="true" style="font-size:22px; color: red;"></i></td>
+                      </tr>
+                    </tbody>
+                    
+                  </table>
+              </div>
+             </div>
+
+             <!-- <label>Fecha de Compra</label>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <span class="input-group-text" id="basic-addon1">Inicio</span>
+               </div>
+               <input type="date" class="form-control" [ngModel] ="emissionStartDate | date:'yyyy-MM-dd'" (ngModelChange)="emissionStartDate = $event">
+             </div> -->
+           
+           </div>
+         </div>
+       
+        </div>
+       </div>
+       <br>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right">
+              <button type="button" class="btn btn-success" (click)="addManualExpense()">Guardar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ </div>
+</div>
 <br>
-<div  *ngFor="let ed of expenseData; index as i;">
+<div *ngFor="let ed of expenseData; index as i;">
   <div *ngIf="ed && !errorMessage && !ed.info" class="card bg-light">
       <div class="card-body" style="text-align: center;">
           <div style="font-family:'Courier New', Courier, monospace">

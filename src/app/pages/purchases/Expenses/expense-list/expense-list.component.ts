@@ -296,7 +296,7 @@ export class ExpenseListComponent implements OnInit {
   openBatchLoad(content) {
 
 
-    this.modal =  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modal =  this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',  size: 'xl', backdrop: 'static' });
     this.modal.result.then((e) => {
        console.log("dialogo cerrado")
    });  

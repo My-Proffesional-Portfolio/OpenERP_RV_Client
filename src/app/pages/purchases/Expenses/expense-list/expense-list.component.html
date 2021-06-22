@@ -147,10 +147,22 @@
     </nav>
   </div>
   </div>
-  
+
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="row justify-content-sm-center">
+      <div class="col-sm-auto">
+        <chart-pie [dataPie]="dataPie"></chart-pie>
+      </div>
+      <div class="col-sm-auto">
+        <chart-bar [dataBar]="dataPie"></chart-bar>
+      </div>
+  </div>
+</div>
+  
+
+  <!-- <div class="row">
+    <div class="col text-center">
         <google-chart #chart style="display: inline-flex;"
         [title]="titlePie"
         [type]="typePie"
@@ -162,19 +174,21 @@
       </google-chart>
 
     </div>
-    <div class="col-sm-6">
-      <google-chart #chart style="display: inline-flex;"
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <google-chart #chart  style="display: inline-flex;"
       [title]="titleBar"
       [type]="typeBar"
       [data]="dataPie"
-      [columnNames]="columnNames"
+      columnNames="columnNames"
       [options]="options"
 
       >
     </google-chart>
 
   </div>
-  </div>
+  </div> -->
 
   
   <!-- <div class="row">
@@ -288,7 +302,7 @@
     </div>
   </ng-template>
 
-  <ng-template #contentUploadCFDI let-modal>
+  <ng-template #contentUploadCFDI let-modal class="modal fade bd-example-modal-xl">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Carga de CFDI</h4>
       <button type="button" class="close" aria-label="Close" (click)="refreshAfterLoad()">
@@ -299,7 +313,7 @@
        <app-load></app-load>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="refreshAfterLoad()">OK</button>
+      <button type="button" class="btn btn-outline-dark" (click)="refreshAfterLoad()">Cerrar</button>
     </div>
   </ng-template>
   

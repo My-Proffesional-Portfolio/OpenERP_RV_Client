@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientModalContentComponent } from './client-modal-content.component';
+import { BarComponent } from './bar.component';
 
-describe('ClientModalContentComponent', () => {
-  let component: ClientModalContentComponent;
-  let fixture: ComponentFixture<ClientModalContentComponent>;
+describe('BarComponent', () => {
+  let component: BarComponent;
+  let fixture: ComponentFixture<BarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClientModalContentComponent ]
+      declarations: [ BarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClientModalContentComponent);
+    fixture = TestBed.createComponent(BarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
