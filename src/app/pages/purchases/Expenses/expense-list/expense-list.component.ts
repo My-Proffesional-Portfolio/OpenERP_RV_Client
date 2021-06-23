@@ -316,22 +316,21 @@ export class ExpenseListComponent implements OnInit {
     this.resetSearch();
    }
 
-   getClientsForDownload() {
+   getExpenseItems() {
     this.downloadProcessing =  true;
     this.expenseService.getExpenseItems().
     subscribe((data: any)=> {
       debugger;
       var element = document.createElement('a');
-      var text = "Articulo, PrecioUnitario, Razón social, Contacto, RFC, Teléfono, Email, Dirección fiscal\n";
-      for(var i = 0; i < data.items.length; i++)
+      var text = "Articulo, Total, Subtotal, Impuesto, Provedor\n";
+      for(var i = 0; i < data.length; i++)
       {
-        var client = data.items[i];
-        text+= client.number + "," + client.companyName + "," 
-        + client.legalName + "," + client.contactName + "," + client.fiscalTaxID + ","
-        + client.phone + "," + client.email + "," + client.fiscalAddress + "\n";
+        var client = data[i];
+        text+= client.description + "," + client.total + "," 
+        + client.subtotal + "," + client.tax + "," + client.providerName +  "\n";
       }
       element.setAttribute('href', 'data:text/plain;charset=unicode,' + encodeURIComponent(text));
-      element.setAttribute('download', "Catalogo clientes.csv");
+      element.setAttribute('download', "Compras.csv");
     
       element.style.display = 'none';
       document.body.appendChild(element);

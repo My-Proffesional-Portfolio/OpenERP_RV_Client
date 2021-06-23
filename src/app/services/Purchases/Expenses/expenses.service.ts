@@ -184,7 +184,7 @@ export class ExpensesService {
   getExpenseItems() {
     const headers = this.initHeaders();
     return this.http.get(ServerEnvironment.baseURL 
-      + `expense/getItems`, {headers: headers});
+      + `expense/getAllExpenseItems`, {headers: headers});
   }
 
  
