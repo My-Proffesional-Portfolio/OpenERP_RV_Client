@@ -7,7 +7,7 @@
 <div *ngIf="xmlMode" class="row">
   <div class="col text-center">
       <div>
-        <button type="button" class="btn btn-primary" (click)="changeMode()">Cargar nota o remision</button>
+        <button type="button" class="btn btn-primary" (click)="changeMode()">Cargar ticket</button>
       </div>
   </div>
 </div>
@@ -53,13 +53,13 @@
           <span class="input-group-text" id="basic-addon1">Proveedor</span>
         </div>
     
-      <select *ngIf="providerExistMode" class="form-control" [(ngModel)]="selectedProvider">
+      <select *ngIf="providerExistMode" class="form-control" [(ngModel)]="selectedProvider" (change)="manageSelectedProvider($event)">
           <option *ngFor="let x of providersList" [ngValue]="x" >{{x.companyName}} - {{x.rfc}}</option>
       </select>
-      <input *ngIf="newProviderMode"  type="text" class="form-control" placeholder="Nombre">
-      <input *ngIf="newProviderMode" type="text" class="form-control" placeholder="RFC">
-      <input *ngIf="newProviderMode" type="text" class="form-control" placeholder="Dirección">
-      <input *ngIf="newProviderMode" type="text" class="form-control" placeholder="Email">
+      <input *ngIf="newProviderMode" [(ngModel)]="newProvider.name" name="name"  type="text" class="form-control" placeholder="Nombre">
+      <input *ngIf="newProviderMode" [(ngModel)]="newProvider.rfc" name="rfc"  type="text" class="form-control" placeholder="RFC">
+      <input *ngIf="newProviderMode" [(ngModel)]="newProvider.address" name="address"  type="text" class="form-control" placeholder="Dirección">
+      <input *ngIf="newProviderMode" [(ngModel)]="newProvider.email"  name="email" type="text" class="form-control" placeholder="Email">
       <button *ngIf="providerExistMode" class="btn btn-warning" (click)="providerMode()">Agregar nuevo</button>
       <button *ngIf="newProviderMode" class="btn btn-warning" (click)="providerMode()">Seleccionar existente</button>  
     </div>
@@ -68,7 +68,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Inicio</span>
         </div>
-        <input type="date" class="form-control" [ngModel] ="emissionStartDate | date:'yyyy-MM-dd'" (ngModelChange)="emissionStartDate = $event">
+        <input type="date" class="form-control" [ngModel] ="expenseDate | date:'yyyy-MM-dd'" (ngModelChange)="manageExpenseDate($event)">
       </div>
 
       <div class="row">
@@ -82,7 +82,7 @@
              <div class="row">
                <div class="col-sm-5">
                  <label>Producto</label>
-                 <input [(ngModel)]="newExpenseItem.productName" type="texr" class="form-control" placeholder="Producto">
+                 <input [(ngModel)]="newExpenseItem.productName" type="text" class="form-control" placeholder="Producto">
                  <br>
                </div>
                <div class="col-sm-1">
@@ -134,23 +134,21 @@
                         <td>{{e.total}}</td>
                         <td><i class="fa fa-trash" (click)="deleteNewItemByIndex(i)"  aria-hidden="true" style="font-size:22px; color: red;"></i></td>
                       </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{newExpense.taxAmount | currency}}</td>
+                        <td>{{newExpense.subTotalAmount | currency}}</td>
+                        <td>{{newExpense.totalAmount | currency}}</td>
+                        <td></td>
+                      </tr>
                     </tbody>
-                    
                   </table>
               </div>
              </div>
-
-             <!-- <label>Fecha de Compra</label>
-             <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                 <span class="input-group-text" id="basic-addon1">Inicio</span>
-               </div>
-               <input type="date" class="form-control" [ngModel] ="emissionStartDate | date:'yyyy-MM-dd'" (ngModelChange)="emissionStartDate = $event">
-             </div> -->
-           
            </div>
          </div>
-       
         </div>
        </div>
        <br>

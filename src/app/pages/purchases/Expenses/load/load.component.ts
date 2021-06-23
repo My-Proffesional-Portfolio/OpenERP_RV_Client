@@ -9,7 +9,7 @@ import { ExpensesService } from 'src/app/services/Purchases/Expenses/expenses.se
 export class LoadComponent implements OnInit {
   processing: boolean;
   selectedProvider: any;
-  newProvider: any;
+  newProvider: {name: string, rfc: string, address: string, email: string};
 
   constructor(private expenseService: ExpensesService) { }
   fileToUpload: FileList;
@@ -21,8 +21,10 @@ export class LoadComponent implements OnInit {
   providerExistMode:boolean = true;
   newProviderMode: boolean = false;
 
-  newExpense: {items: any[], selectedProvider: any, newProvider: any};
+  newExpense: {items: any[], selectedProvider: any, newProvider: any, expenseDate: Date, totalAmount: number, taxAmount: number, subTotalAmount : number};
+  
   newExpenseItem: any;
+  expenseDate: Date = new Date();
 
   providersList: any[] = [];
 
@@ -50,9 +52,10 @@ export class LoadComponent implements OnInit {
             });
     }
 
-    this.newExpense = {items: [], selectedProvider : {}, newProvider: {}};
+    this.newExpense = {items: [], selectedProvider : {}, newProvider: {}, expenseDate: new Date(), totalAmount: 0, taxAmount: 0, subTotalAmount : 0};
     this.newExpense.items = [];
     this.newExpenseItem = {productName : "", quantity : 1, tax: 0, total: 0, price: 0}
+    this.newProvider = {name: "", rfc: "", address: "", email: ""}
   }
 
   downloadCFDI() {
@@ -71,6 +74,7 @@ export class LoadComponent implements OnInit {
         debugger;
         this.providersList = data;
         this.selectedProvider = this.providersList[0];
+        this.newExpense.selectedProvider = this.selectedProvider;
   
       },(errorEvent) => {
           debugger;
@@ -132,6 +136,10 @@ export class LoadComponent implements OnInit {
 
     this.newExpense.items.push(this.newExpenseItem);
     this.newExpenseItem = {productName : "", quantity : 1, tax: 0, total: 0, price: 0}
+
+    this.newExpense.totalAmount = this.newExpense.items.reduce((a, b) => +a + +b.total, 0);
+    this.newExpense.taxAmount = this.newExpense.items.reduce((a, b) => +a + +b.tax, 0);
+    this.newExpense.subTotalAmount = this.newExpense.items.reduce((a, b) => +a + (+b.price *b.quantity), 0);
     
   }
 
@@ -152,6 +160,9 @@ export class LoadComponent implements OnInit {
   deleteNewItemByIndex(index: number){
 
     this.newExpense.items.splice(index, 1);
+    this.newExpense.totalAmount = this.newExpense.items.reduce((a, b) => +a + +b.total, 0);;
+    this.newExpense.taxAmount = this.newExpense.items.reduce((a, b) => +a + +b.tax, 0);
+    this.newExpense.subTotalAmount = this.newExpense.items.reduce((a, b) => +a + (+b.price *b.quantity), 0);
 
   }
 
@@ -162,6 +173,7 @@ export class LoadComponent implements OnInit {
   }
   
   addManualExpense (){
+    debugger;
     if (this.providerExistMode){
       this.newExpense.selectedProvider = this.selectedProvider;
       this.newExpense.newProvider = null;
@@ -172,14 +184,55 @@ export class LoadComponent implements OnInit {
       this.newExpense.selectedProvider = null;
     }
 
-    if (!this.newProvider || !this.selectedProvider)
+    if (!this.newProvider && !this.selectedProvider)
      return;
 
     if (this.newExpense.items.length === 0)
      return;
 
+
+     this.processing = true;
+     this.expenseService.addSingleExpenseNoCFDI(this.newExpense).subscribe((data: any)=> {
+      debugger;
+      if (data.errorMessages != undefined && data.errorMessages.length > 0 )
+      {
+        this.errorMessage = "Ha ocurrido un error en el sistema: " + data.errorMessages[0];
+        this.processing = false;
+        return;
+
+      }
+
+      this.expenseData = [];
+      this.expenseData = data;
+      this.processing = false;
+
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        this.processing = false;
+        // if (errorEvent.status == 401)
+        // {
+        //   this.authService.logout();
+        //   this.router.navigate(['/login']);
+        // }
+      });
+
   }
 
+  manageSelectedProvider(event)
+  {
+    this.newExpense.selectedProvider  = this.selectedProvider;
+
+    
+  }
+
+
+  manageExpenseDate(event){
+
+    this.newExpense.expenseDate = event;
+
+
+  }
   // saveFile()
   // {
   //   this.expenseService.postInvoiceFile(this.fileToUpload).subscribe((data: any)=> {

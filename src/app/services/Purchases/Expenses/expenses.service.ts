@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../Accounts/Authentication/authenticat
 export class ExpensesService {
 
 
+
   httpHeaders :HttpHeaders;
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { 
@@ -173,5 +174,19 @@ export class ExpensesService {
 
   }
 
+  addSingleExpenseNoCFDI(newExpense){
+    debugger;
+    const headers = this.initHeaders();
+    return this.http.post(ServerEnvironment.baseURL + "expense/addExpense", newExpense, {headers: headers});
+
+  }
+
+  getExpenseItems() {
+    const headers = this.initHeaders();
+    return this.http.get(ServerEnvironment.baseURL 
+      + `expense/getItems`, {headers: headers});
+  }
+
+ 
 
 }

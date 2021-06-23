@@ -50,6 +50,7 @@ export class ExpenseListComponent implements OnInit {
   modalDeleteAll: NgbModalRef;
   deleteAllProcessing : boolean = false;
   deleteAllErrorMSG: string;
+  downloadProcessing: boolean;
 
 
 
@@ -92,7 +93,7 @@ export class ExpenseListComponent implements OnInit {
 
     this.selectedExpenses = this.expensesData.items[index];
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'xl', backdrop: 'static' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       alert("Call client delete service ");
 
@@ -314,5 +315,43 @@ export class ExpenseListComponent implements OnInit {
     this.modal.close();
     this.resetSearch();
    }
+
+   getClientsForDownload() {
+    this.downloadProcessing =  true;
+    this.expenseService.getExpenseItems().
+    subscribe((data: any)=> {
+      debugger;
+      var element = document.createElement('a');
+      var text = "Articulo, PrecioUnitario, Razón social, Contacto, RFC, Teléfono, Email, Dirección fiscal\n";
+      for(var i = 0; i < data.items.length; i++)
+      {
+        var client = data.items[i];
+        text+= client.number + "," + client.companyName + "," 
+        + client.legalName + "," + client.contactName + "," + client.fiscalTaxID + ","
+        + client.phone + "," + client.email + "," + client.fiscalAddress + "\n";
+      }
+      element.setAttribute('href', 'data:text/plain;charset=unicode,' + encodeURIComponent(text));
+      element.setAttribute('download', "Catalogo clientes.csv");
+    
+      element.style.display = 'none';
+      document.body.appendChild(element);
+    
+      element.click();
+    
+      document.body.removeChild(element);
+      this.downloadProcessing =  false;
+
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401)
+        {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+          this.downloadProcessing =  false;
+        }
+        this.downloadProcessing =  false;
+      });
+  }
 
 }
