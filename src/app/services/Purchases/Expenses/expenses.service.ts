@@ -187,6 +187,12 @@ export class ExpensesService {
       + `expense/getAllExpenseItems`, {headers: headers});
   }
 
+  updateExpenseItem(status: boolean, id) {
+    const headers = this.initHeaders();
+    return this.http.put(ServerEnvironment.baseURL + `expense/UpdateFullFilledItem?statusUpdate=${status}&Uuid=${id}`,null, {headers: headers});
+
+  }
+
  
 
 }

@@ -90,19 +90,25 @@
                 <input (ngModelChange)="updateQuantity($event)"  [(ngModel)]="newExpenseItem.quantity" type="text" class="form-control" placeholder="Cant.">
                 <br>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <label>Precio</label>
                 <input (ngModelChange)="updatePrice($event)"  [(ngModel)]="newExpenseItem.price" type="text" class="form-control" placeholder="Precio">
                 <br>
               </div>
               <div class="col-sm-1">
                 <label>IVA</label>
-                <input [(ngModel)]="newExpenseItem.tax" type="text" class="form-control" placeholder="IVA">
+                <input (ngModelChange)="updateTax($event)" [(ngModel)]="newExpenseItem.tax" type="text" class="form-control" placeholder="IVA">
                 <br>
               </div>
               <div class="col-sm-2">
                 <label>Total</label>
                 <input  [(ngModel)]="newExpenseItem.total" type="text" class="form-control" placeholder="Total">
+                <br>
+              </div>
+
+              <div class="col-sm-1">
+                <label>Surtido</label>
+                <input  [(ngModel)]="newExpenseItem.fullFilled" type="checkbox"  placeholder="Surtido">
                 <br>
               </div>
               <div class="col-sm-1">
@@ -185,6 +191,8 @@
                           <th scope="col">Descripción</th>
                           <th scope="col">Subtotal</th>
                           <th scope="col">Total</th>
+                          <th scope="col">Entregado</th>
+                          
                         
                         </tr>
                       </thead>
@@ -195,6 +203,7 @@
                           <td>{{ei.description}}</td>
                           <td>{{ei.subtotal | currency}}</td>
                           <td>{{ei.total | currency}}</td>
+                          <td><input (change)="changeFilledState($event, ei.id)" [(ngModel)]="ei.fullFilled" type="checkbox"></td>
                          
                         </tr>
                       </tbody>

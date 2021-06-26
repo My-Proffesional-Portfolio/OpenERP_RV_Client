@@ -95,7 +95,7 @@ export class ExpenseListComponent implements OnInit {
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'xl', backdrop: 'static' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      alert("Call client delete service ");
+    
 
     }, (reason) => {
     });
@@ -322,11 +322,11 @@ export class ExpenseListComponent implements OnInit {
     subscribe((data: any)=> {
       debugger;
       var element = document.createElement('a');
-      var text = "Articulo, Total, Subtotal, Impuesto, Provedor\n";
+      var text = "Articulo, Entregado, Total, Subtotal, Impuesto, Provedor\n";
       for(var i = 0; i < data.length; i++)
       {
         var client = data[i];
-        text+= client.description + "," + client.total + "," 
+        text+= client.description + "," + client.fullFilled  + "," + client.total + "," 
         + client.subtotal + "," + client.tax + "," + client.providerName +  "\n";
       }
       element.setAttribute('href', 'data:text/plain;charset=unicode,' + encodeURIComponent(text));

@@ -54,7 +54,7 @@ export class LoadComponent implements OnInit {
 
     this.newExpense = {items: [], selectedProvider : {}, newProvider: {}, expenseDate: new Date(), totalAmount: 0, taxAmount: 0, subTotalAmount : 0};
     this.newExpense.items = [];
-    this.newExpenseItem = {productName : "", quantity : 1, tax: 0, total: 0, price: 0}
+    this.newExpenseItem = {productName : "", quantity : 1, tax: 0, total: 0, price: 0, fullFilled: true}
     this.newProvider = {name: "", rfc: "", address: "", email: ""}
   }
 
@@ -135,7 +135,7 @@ export class LoadComponent implements OnInit {
     return;
 
     this.newExpense.items.push(this.newExpenseItem);
-    this.newExpenseItem = {productName : "", quantity : 1, tax: 0, total: 0, price: 0}
+    this.newExpenseItem = {productName : "", quantity : 1, tax: 0, total: 0, price: 0, fullFilled: true}
 
     this.newExpense.totalAmount = this.newExpense.items.reduce((a, b) => +a + +b.total, 0);
     this.newExpense.taxAmount = this.newExpense.items.reduce((a, b) => +a + +b.tax, 0);
@@ -154,6 +154,13 @@ export class LoadComponent implements OnInit {
     debugger;
     this.newExpenseItem.tax = (event * this.newExpenseItem.price) * 0.16;
     this.newExpenseItem.total = (event * this.newExpenseItem.price) + this.newExpenseItem.tax;
+
+  }
+
+  updateTax(event){
+    debugger;
+    //this.newExpenseItem.tax = (event * this.newExpenseItem.price) * 0.16;
+    this.newExpenseItem.total = (this.newExpenseItem.quantity * this.newExpenseItem.price) + (+event);
 
   }
 
@@ -231,6 +238,30 @@ export class LoadComponent implements OnInit {
 
     this.newExpense.expenseDate = event;
 
+
+
+  }
+
+  changeFilledState (event, id){
+    debugger;
+    var status = event.target.checked;
+    this.expenseService.updateExpenseItem(status, id).subscribe((data: any)=> {
+      debugger;
+      if (data.errorMessages != undefined && data.errorMessages.length > 0 )
+      {
+
+      }
+    
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        this.processing = false;
+        // if (errorEvent.status == 401)
+        // {
+        //   this.authService.logout();
+        //   this.router.navigate(['/login']);
+        // }
+      });
 
   }
   // saveFile()
