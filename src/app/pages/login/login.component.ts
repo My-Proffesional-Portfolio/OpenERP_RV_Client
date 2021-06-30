@@ -14,13 +14,15 @@ export class LoginComponent implements OnInit {
   password: string;
   processing: boolean =  false;
   errorLabel: string = null;
-
+  
   loginViewLabels:any;
+
 
   ngOnInit(): void {
     this.selectLanguage("ES");
     document.getElementById("mySidebar").style.width = "0px";
     document.getElementById("main").style.marginLeft = "0px";
+    
   }
 
   login ()

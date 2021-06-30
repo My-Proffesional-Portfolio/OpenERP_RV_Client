@@ -353,4 +353,35 @@ export class ExpenseListComponent implements OnInit {
       });
   }
 
+  getExpenseItemsPDF(){
+    this.downloadProcessing =  true;
+    this.expenseService.getExpenseItemsPDF().
+    subscribe((data: any)=> {
+      debugger;
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:application/pdf;base64,' + encodeURIComponent(data));
+      element.setAttribute('download', "Listado de gastos PDF.pdf");
+    
+      element.style.display = 'none';
+      document.body.appendChild(element);
+    
+      element.click();
+    
+      document.body.removeChild(element);
+      this.downloadProcessing =  false;
+
+    },(errorEvent) => {
+        debugger;
+        var e = errorEvent;
+        if (errorEvent.status == 401)
+        {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+          this.downloadProcessing =  false;
+        }
+        this.downloadProcessing =  false;
+      });
+
+  }
+
 }
